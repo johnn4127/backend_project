@@ -1,0 +1,20 @@
+<form class="container" action="/registration" method="post">
+    <div class="form">
+        <legend> Create account </legend>
+        <% { %>
+            <div class="name">
+            Your name <input type="text" placeholder="First and last name" name="name"/><br><br></div>
+            <div class="email">
+            Email <input type="email" name="email" value="" /><br><br></div>
+            <div class="password">
+            Password <input type="password" placeholder="at least 8 characters" minlength="8" maxlength="25" name="password" value="" /><br><br><p class="passConstraint">Passwords must be at least 8 characters. </p></div>
+            <div class="password2">
+            Re-enter password <input type="password" name = "repassword"  minlength="8" maxlength="25" value = "" /> <br><br></div>
+        <% } %>
+        <button onclick="">Create your Snuggle Reads account</button>
+        <div class="line"></div>
+        <p class="account">Already have an account? <a href="./login">Sign in</a></p>
+    </div>
+    <!-- <input type="submit" value="Create your IMDb account"> -->
+    
+    </form>
