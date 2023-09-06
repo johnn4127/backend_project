@@ -11,6 +11,31 @@ const path = require('path')
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: false }))
 
+//winston logger
+const logger = winston.createLogger({
+    level: 'info',
+    format: winston.format.json(),
+    defaultMeta: { service: 'user-service' },
+    transports: [
+
+      new winston.transports.File({ filename: 'error.log', level: 'error' }),
+      new winston.transports.File({ filename: 'combined.log' }),
+    ],
+  });
+
+    //winston logger added to all endpoints
+  app.all('*', (req, res, next) => {
+    logger.log({
+      level: 'info',
+      method: req.method,
+      url: req.url,
+      body: req.body,
+      params: req.params,
+      timestamp: new Date().toLocaleString()
+    });
+    next()
+  })
+
 app.get('/registration',(req,res) => {
     res.render("registration")
 })
