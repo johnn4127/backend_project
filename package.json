@@ -9,5 +9,16 @@
     "sequelize-cli": "^6.6.1",
     "sqlite3": "^5.1.6",
     "winston": "^3.10.0"
-  }
+  },
+  "scripts": {
+    "start": "node server.js"
+  },
+  "name": "backend_project",
+  "description": "",
+  "version": "1.0.0",
+  "main": "server.js",
+  "devDependencies": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }

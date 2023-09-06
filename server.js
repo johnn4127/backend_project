@@ -3,13 +3,13 @@ const app = express()
 app.use(express.json()) 
 
 
-app.get('/registration',(req,res) => {
+app.get('/register',(req,res) => {
     
 })
 
 
 
-app.post('/registration',(req,res)=>{
+app.post('/register',(req,res)=>{
 })
 
 app.get('/login',(req,res) =>{
