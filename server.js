@@ -15,8 +15,8 @@ app.get('/registration',(req,res) => {
     res.render("registration")
 })
 
-app.get('/',(req,res) => {
-    res.send('welcome')
+app.get('/home',(req,res) => {
+    res.render('home')
 })
 
 
