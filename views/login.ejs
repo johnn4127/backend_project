@@ -1,0 +1,16 @@
+<form class="container" action="/login" method="post">
+    <div class="form">
+        <legend> Sign in </legend>
+        <% { %>
+            <div class="email">
+            Email <input type="email" name="email" value="" /><br><br></div>
+            <div class="password">
+            Password <input type="password" minlength="8" maxlength="25" name="password" value="" /><br><br></div>
+        <% } %>
+        <button onclick="">Sign in</button>
+        <div class="line"></div>
+        <p class="account">Need to create an account?. <a href="./registration">Register</a></p>
+    </div>
+    <!-- <input type="submit" value="Create your IMDb account"> -->
+    
+    </form>
