@@ -70,6 +70,7 @@ app.post('/registration', async(req,res) => {
 }
 })
 
+
 app.delete('/delete', async(req,res) =>{
     await Books.destroy({
         where:{book_name:"test"}
