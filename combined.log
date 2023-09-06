@@ -16,3 +16,8 @@
 {"body":{},"level":"info","method":"GET","params":{"0":"/registration"},"service":"user-service","timestamp":"9/6/2023, 4:08:17 PM","url":"/registration"}
 {"body":{},"level":"info","method":"GET","params":{"0":"/login"},"service":"user-service","timestamp":"9/6/2023, 4:08:21 PM","url":"/login"}
 {"body":{},"level":"info","method":"GET","params":{"0":"/registration"},"service":"user-service","timestamp":"9/6/2023, 4:08:23 PM","url":"/registration"}
+{"body":{},"level":"info","method":"GET","params":{"0":"/home"},"service":"user-service","timestamp":"9/6/2023, 4:23:49 PM","url":"/home"}
+{"body":{},"level":"info","method":"GET","params":{"0":"/"},"service":"user-service","timestamp":"9/6/2023, 4:23:53 PM","url":"/"}
+{"body":{},"level":"info","method":"GET","params":{"0":"/home"},"service":"user-service","timestamp":"9/6/2023, 4:23:56 PM","url":"/home"}
+{"body":{},"level":"info","method":"GET","params":{"0":"/registration"},"service":"user-service","timestamp":"9/6/2023, 4:24:01 PM","url":"/registration"}
+{"body":{},"level":"info","method":"GET","params":{"0":"/login"},"service":"user-service","timestamp":"9/6/2023, 4:24:08 PM","url":"/login"}
