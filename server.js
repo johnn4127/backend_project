@@ -39,8 +39,8 @@ const logger = winston.createLogger({
     next()
   })
 
-  app.get('/',(req,res) => {
-    res.send('hello')
+  app.get('/home',(req,res) => {
+    res.render('home')
 })
 
 app.get('/registration',(req,res) => {
