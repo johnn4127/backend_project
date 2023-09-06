@@ -3,11 +3,14 @@ const bodyParser = require('body-parser');
 const app = express();
 const winston = require("winston");
 const bcrypt = require('bcrypt')
-// const {} = require('./models')
+const {Accounts,Books,Histories} = require('./models')
 app.use(express.json())
 //link ejs/css
 app.use(express.static(__dirname + '/public'));
-const path = require('path')
+const path = require('path');
+const db = "postgres://oniifgkp:VEr8-v22_Ty-JC7eNMdfoTFRPD8YcjLc@berry.db.elephantsql.com/oniifgkp";
+const { Sequelize } = require("sequelize");
+const sequelize = new Sequelize(db)
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: false }))
 
@@ -36,18 +39,43 @@ const logger = winston.createLogger({
     next()
   })
 
+  app.get('/',(req,res) => {
+    res.send('hello')
+})
+
 app.get('/registration',(req,res) => {
     res.render("registration")
 })
 
-app.get('/',(req,res) => {
-    res.render('home')
+
+
+
+app.post('/registration', async(req,res) => {
+    const { firstName, lastName, email, password } = req.body;
+    try {
+        // Hash the password
+        const saltRounds = 10; // You can adjust the number of salt rounds as needed
+        const hashedPassword = await bcrypt.hash(password, saltRounds);
+    
+        // Store the hashed password in the database
+        await Accounts.create({
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          password: hashedPassword, // Store the hashed password
+          repassword: hashedPassword, // Store the hashed password
+        });
+}catch (err){
+    console.log(err)
+}
 })
 
-
-app.post('/register',(req,res)=>{
+app.delete('/delete', async(req,res) =>{
+    await Books.destroy({
+        where:{book_name:"test"}
+    })
+    res.send("sent")
 })
-
 app.get('/login',(req,res) =>{
     res.render("login")
 })
