@@ -1,23 +1,23 @@
 {
   "development": {
-    "username": "pmwdziue",
-    "password": "DdIF2VCV7PLb50vYhpsWslVXDK1JR-Y9",
-    "database": "pmwdziue",
-    "host": "batyr.db.elephantsql.com",
+    "username": "oniifgkp",
+    "password": "VEr8-v22_Ty-JC7eNMdfoTFRPD8YcjLc",
+    "database": "oniifgkp",
+    "host": "berry.db.elephantsql.com",
     "dialect": "postgres"
   },
   "test": {
-    "username": "pmwdziue",
-    "password": "DdIF2VCV7PLb50vYhpsWslVXDK1JR-Y9",
-    "database": "pmwdziue",
-    "host": "batyr.db.elephantsql.com",
+    "username": "oniifgkp",
+    "password": "VEr8-v22_Ty-JC7eNMdfoTFRPD8YcjLc",
+    "database": "oniifgkp",
+    "host": "berry.db.elephantsql.com",
     "dialect": "postgres"
   },
   "production": {
-    "username": "pmwdziue",
-    "password": "DdIF2VCV7PLb50vYhpsWslVXDK1JR-Y9",
-    "database": "pmwdziue",
-    "host": "batyr.db.elephantsql.com",
+    "username": "oniifgkp",
+    "password": "VEr8-v22_Ty-JC7eNMdfoTFRPD8YcjLc",
+    "database": "oniifgkp",
+    "host": "berry.db.elephantsql.com",
     "dialect": "postgres"
   }
 }
