@@ -1,0 +1,9 @@
+{"body":{},"level":"info","method":"GET","params":{"0":"/"},"service":"user-service","timestamp":"9/6/2023, 3:05:44 PM","url":"/"}
+{"body":{},"level":"info","method":"GET","params":{"0":"/home"},"service":"user-service","timestamp":"9/6/2023, 3:05:47 PM","url":"/home"}
+{"body":{},"level":"info","method":"GET","params":{"0":"/..."},"service":"user-service","timestamp":"9/6/2023, 3:05:47 PM","url":"/..."}
+{"body":{},"level":"info","method":"GET","params":{"0":"/home"},"service":"user-service","timestamp":"9/6/2023, 3:27:03 PM","url":"/home"}
+{"body":{},"level":"info","method":"GET","params":{"0":"/..."},"service":"user-service","timestamp":"9/6/2023, 3:27:03 PM","url":"/..."}
+{"body":{},"level":"info","method":"GET","params":{"0":"/home"},"service":"user-service","timestamp":"9/6/2023, 3:37:22 PM","url":"/home"}
+{"body":{},"level":"info","method":"GET","params":{"0":"/..."},"service":"user-service","timestamp":"9/6/2023, 3:37:22 PM","url":"/..."}
+{"body":{},"level":"info","method":"GET","params":{"0":"/home"},"service":"user-service","timestamp":"9/6/2023, 3:38:02 PM","url":"/home"}
+{"body":{},"level":"info","method":"GET","params":{"0":"/..."},"service":"user-service","timestamp":"9/6/2023, 3:38:02 PM","url":"/..."}
