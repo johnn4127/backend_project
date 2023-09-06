@@ -16,3 +16,6 @@
 {"body":{},"level":"info","method":"GET","params":{"0":"/registration"},"service":"user-service","timestamp":"9/6/2023, 4:08:23 PM","url":"/registration"}
 {"body":{},"level":"info","method":"GET","params":{"0":"/registration"},"service":"user-service","timestamp":"9/6/2023, 4:21:49 PM","url":"/registration"}
 {"body":{},"level":"info","method":"GET","params":{"0":"/registration"},"service":"user-service","timestamp":"9/6/2023, 4:21:56 PM","url":"/registration"}
+{"body":{},"level":"info","method":"GET","params":{"0":"/home"},"service":"user-service","timestamp":"9/6/2023, 4:29:34 PM","url":"/home"}
+{"body":{},"level":"info","method":"GET","params":{"0":"/home"},"service":"user-service","timestamp":"9/6/2023, 4:30:16 PM","url":"/home"}
+{"body":{},"level":"info","method":"GET","params":{"0":"/..."},"service":"user-service","timestamp":"9/6/2023, 4:30:16 PM","url":"/..."}
