@@ -39,8 +39,8 @@ const logger = winston.createLogger({
     next()
   })
 
-  app.get('/',(req,res) => {
-    res.send('hello')
+  app.get('/home',(req,res) => {
+    res.render('home')
 })
 
 app.get('/registration',(req,res) => {
@@ -69,6 +69,7 @@ app.post('/registration', async(req,res) => {
     console.log(err)
 }
 })
+
 
 app.delete('/delete', async(req,res) =>{
     await Books.destroy({
