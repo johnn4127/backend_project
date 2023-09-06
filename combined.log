@@ -7,3 +7,10 @@
 {"body":{},"level":"info","method":"GET","params":{"0":"/..."},"service":"user-service","timestamp":"9/6/2023, 3:37:22 PM","url":"/..."}
 {"body":{},"level":"info","method":"GET","params":{"0":"/home"},"service":"user-service","timestamp":"9/6/2023, 3:38:02 PM","url":"/home"}
 {"body":{},"level":"info","method":"GET","params":{"0":"/..."},"service":"user-service","timestamp":"9/6/2023, 3:38:02 PM","url":"/..."}
+{"body":{},"level":"info","method":"GET","params":{"0":"/"},"service":"user-service","timestamp":"9/6/2023, 4:06:52 PM","url":"/"}
+{"body":{},"level":"info","method":"GET","params":{"0":"/home"},"service":"user-service","timestamp":"9/6/2023, 4:06:56 PM","url":"/home"}
+{"body":{},"level":"info","method":"GET","params":{"0":"/"},"service":"user-service","timestamp":"9/6/2023, 4:08:10 PM","url":"/"}
+{"body":{},"level":"info","method":"GET","params":{"0":"/..."},"service":"user-service","timestamp":"9/6/2023, 4:08:10 PM","url":"/..."}
+{"body":{},"level":"info","method":"GET","params":{"0":"/registration"},"service":"user-service","timestamp":"9/6/2023, 4:08:17 PM","url":"/registration"}
+{"body":{},"level":"info","method":"GET","params":{"0":"/login"},"service":"user-service","timestamp":"9/6/2023, 4:08:21 PM","url":"/login"}
+{"body":{},"level":"info","method":"GET","params":{"0":"/registration"},"service":"user-service","timestamp":"9/6/2023, 4:08:23 PM","url":"/registration"}
