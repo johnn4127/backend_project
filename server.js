@@ -48,13 +48,50 @@ app.get('/registration',(req,res) => {
 })
 
 
-
+app.get('/test', async(req,res) => {
+    let bookdata = await Books.findAll()
+    console.log(bookdata)
+    res.render('forgot_password',{title:bookdata})
+})
 
 app.post('/registration', async(req,res) => {
-    const { firstName, lastName, email, password } = req.body;
+    const { firstName, lastName, email, password, repassword} = req.body;
+        const urlRegex = /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i;
+  // Check if password contains a URL
+  if (urlRegex.test(password)) {
+    return res.status(400).render('registration',{errorMessage:'Password should not contain a URL'});
+}
+
+  //
+    //checks all fields are entered
+    if (!firstName || !lastName ||!email || !password || !repassword) {
+        return res.render('registration',{errorMessage:'All fields are required'});
+      //  return res.render('register', { error: "All fields are required" }); --old code 
+    }
+    //first name only contains letters
+    const nameRegex = /^[A-Za-z]+$/; 
+
+    if (!nameRegex.test(firstName)) {
+    return res.status(400).render('registration',{errorMessage:'Name should only contain letters'})}
+    //last name contains letters
+    if (!nameRegex.test(lastName)) {
+      return res.status(400).render('registration',{errorMessage:'Name should only contain letters'})}
+    
+    //check password matches repassword
+    if (password !== repassword) {
+        return res.status(400).render('registration',{errorMessage:'Passwords do not match'});
+        
+    }
+   //Email existing
+    const existingEmail = await Accounts.findOne({ where: { email: email } });
+
+  if (existingEmail) {
+    return res.status(400).render('registration',{errorMessage:'Email already registered'});
+    
+  }
     try {
         // Hash the password
-        const saltRounds = 10; // You can adjust the number of salt rounds as needed
+        const saltRounds = 10; 
         const hashedPassword = await bcrypt.hash(password, saltRounds);
     
         // Store the hashed password in the database
@@ -65,6 +102,7 @@ app.post('/registration', async(req,res) => {
           password: hashedPassword, // Store the hashed password
           repassword: hashedPassword, // Store the hashed password
         });
+        res.render('registration',{ successMessage: 'Account created successfully' })
 }catch (err){
     console.log(err)
 }
@@ -82,9 +120,16 @@ app.get('/login',(req,res) =>{
 })
 
 app.post('/login',(req,res)=>{
-    res.render("login")
+    res.render("home")
+
 })
 
 app.listen(3000, () =>{
     console.log(`Server is running on port 3000`)
+})
+
+app.get('/books', async(req,res) => {
+  const allBooks = await Books.findAll()
+  
+  res.render("books", {allBooks:allBooks})
 })
