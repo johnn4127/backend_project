@@ -1,10 +1,18 @@
-#navbar{
-    font-family: cursive;
+.navbar-expand-lg bg-body-tertiary{
+    background-color: brown;
 }
-p{
-    font-family: 'Times New Roman', Times, serif
+
+#top-container{
+    padding: 15px;
+    margin: 10px;
+    background-image: url(bluePic.jpg);
+    height: 400px;
+    
 }
-body{
-    background-color: rebeccapurple;
-    font-size: 70%;
+#inner-topContainer-carousel{
+    background-color: white;
+    height: 300px;
+    position: relative;
+    top: 30px;
+    
 }
