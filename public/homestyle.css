@@ -1,14 +1,48 @@
-
-
-#top-container{
-    padding: 15px;
-    margin: 10px;
-    height: 400px;
-    
-}
-#inner-topContainer-carousel{
+.everything-container {
+    background-color: orange;
+    padding: 20px;
+    border: 1px solid #ddd;
+  
+  }
+  .homeimage{
     height: 300px;
-    position: relative;
-    top: 30px;
-    
+
+  }
+  .section {
+    display:flex;
+    justify-content: space-between;
+    }
+ .imagecontainer {
+  height: 300px;
+  width: 200px;
+  border: 1px solid black;
+  
+ }
+
+ .homelargeimagelandscape {
+  width: 800px;
+  height: 400px;
+  object-fit: cover;
+  border-radius: 20px;
+  
+ }
+
+.homelargeimageportrait {
+ height: 550px;
+ object-fit: cover;
+ border-radius: 20px;
+
 }
+
+ .largeimagecontainerwhite {
+  display: flex;
+  justify-content: center;
+  background-color: white;
+  padding: 150px;
+ }
+
+ .largeimagecontainer {
+  display: flex;
+  justify-content: center;
+  padding: 150px;
+ }
