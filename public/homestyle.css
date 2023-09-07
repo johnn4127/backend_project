@@ -1,8 +1,7 @@
 .everything-container {
-    background-color: orange;
+    background-color: rgb(223, 241, 246);
     padding: 20px;
     border: 1px solid #ddd;
-  
   }
   .homeimage{
     height: 300px;
@@ -45,4 +44,77 @@
   display: flex;
   justify-content: center;
   padding: 150px;
+ }
+
+ .header-title{
+
+  font-size: 100px;
+  font-family:'Courier New', Courier, monospace ;
+ }
+
+ #navcontainer1{
+  display: flex;
+ }
+ #navcontainer2{
+  display: flex;
+ }
+ #navcontainer3{
+  display: flex;
+  
+ }
+ nav{
+  display: flex;
+  flex-direction: row;
+ }
+
+ #navcontainer4{
+  display: flex;
+ }
+
+#navcontainer5{
+ display: flex;
+ background-image: url('../assets/photo1.jpg');
+ background-size: cover;
+ height:100vh
+}
+.hr-tag {
+  height: 20px;
+  background-color: black;
+  border-radius: 50%;
+}
+
+
+.navbar1{
+display: flex;
+justify-content: center;
+background-color: cornflowerblue;
+font-size: larger;
+ }
+
+ .navbar2{
+  display: flex;
+  background-color: white;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 50px;
+  
+  
+ }
+
+ #snuggle-reads{
+  text-decoration: none;
+  color: black;
+  font-weight: bolder;
+ }
+
+ .navlinks{
+  margin: .7%;
+  font-size: medium;
+  font-weight: 550;
+  position: relative;
+  left: 120px;
+  top: 10px;
+  text-decoration: none;
+  font-family: 'Courier New', Courier, monospace;
+  color: black;
+ 
  }
