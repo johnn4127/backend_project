@@ -3,15 +3,27 @@
 <form class="container" action="/registration" method="post">
     <div class="form">
         <legend> Create account </legend>
+        <% if (typeof successMessage !=='undefined' ) { %>
+            <p style="color: green;">
+                <%= successMessage %>
+            </p>
+        <% } %>
+        <!-- error message -->
+        <% if (typeof errorMessage !=='undefined' ) { %>
+            <p style="color: red;">
+                <%= errorMessage %>
+            </p>
+        <% } %>
         <% { %>
+
             <div class="firstName">
             First Name <input type="text" placeholder="First name" name="firstName"/><br><br></div>
             <div class="firstName">
-                Last Name <input type="text" placeholder="Last name" name="lastName"/><br><br></div>
+            Last Name <input type="text" placeholder="Last name" name="lastName"/><br><br></div>
             <div class="email">
             Email <input type="email" name="email" value="" /><br><br></div>
             <div class="password">
-            Password <input type="password" placeholder="at least 8 characters" minlength="8" maxlength="25" name="password" value="" /><br><br><p class="passConstraint">Passwords must be at least 8 characters. </p></div>
+            Password <input type="password" placeholder="at least 8 characters" minlength="8" maxlength="25" name="password" value="" /><br><br><p class="passConstraint">Passwords must be between 8 and 25 characters. </p></div>
             <div class="password2">
             Re-enter password <input type="password" name = "repassword"  minlength="8" maxlength="25" value = "" /> <br><br></div>
         <% } %>
