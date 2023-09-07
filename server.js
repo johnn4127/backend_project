@@ -5,6 +5,9 @@ const winston = require("winston");
 const bcrypt = require('bcrypt')
 const {Accounts,Books,Histories} = require('./models')
 const jwt=require('jsonwebtoken')
+const sgMail=require('@sendgrid/mail')
+const API_KEY='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'
+sgMail.setApiKey(API_KEY)
 app.use(express.json())
 //link ejs/css
 app.use(express.static(__dirname + '/public'));
@@ -95,6 +98,14 @@ let user={
   password: "lilbro"
 }
 const JWT_SECRET='some super secret...'
+const message={
+  to: 'deronfambro0112@gmail.com',
+  from: 'snugglereads@gmail.com',
+  subject: 'hello from snugglereads',
+  text: 'hello from sendgrid',
+  html: '<h1>Hello from Snugglereads</h1>'
+}
+sgMail.send(message).then(res=>console.log('email sent')).catch(err=>console.log(err.message))
 
 
 
