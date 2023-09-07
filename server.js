@@ -48,7 +48,11 @@ app.get('/registration',(req,res) => {
 })
 
 
-
+app.get('/test', async(req,res) => {
+    let bookdata = await Books.findAll()
+    console.log(bookdata)
+    res.render('forgot_password',{title:bookdata})
+})
 
 app.post('/registration', async(req,res) => {
     const { firstName, lastName, email, password } = req.body;
@@ -65,6 +69,7 @@ app.post('/registration', async(req,res) => {
           password: hashedPassword, // Store the hashed password
           repassword: hashedPassword, // Store the hashed password
         });
+        res.render('registration',{ successMessage: 'Account created successfully' })
 }catch (err){
     console.log(err)
 }
@@ -82,7 +87,8 @@ app.get('/login',(req,res) =>{
 })
 
 app.post('/login',(req,res)=>{
-    res.render("login")
+    res.render("home")
+
 })
 
 app.listen(3000, () =>{
