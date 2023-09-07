@@ -424,3 +424,14 @@
 {"body":{},"level":"info","method":"GET","params":{"0":"/home"},"service":"user-service","timestamp":"9/6/2023, 8:14:48 PM","url":"/home"}
 {"body":{},"level":"info","method":"GET","params":{"0":"/home"},"service":"user-service","timestamp":"9/6/2023, 8:16:11 PM","url":"/home"}
 {"body":{},"level":"info","method":"GET","params":{"0":"/home"},"service":"user-service","timestamp":"9/6/2023, 8:16:46 PM","url":"/home"}
+{"body":{},"level":"info","method":"GET","params":{"0":"/login"},"service":"user-service","timestamp":"9/7/2023, 10:22:12 AM","url":"/login"}
+{"body":{},"level":"info","method":"GET","params":{"0":"/login"},"service":"user-service","timestamp":"9/7/2023, 10:30:53 AM","url":"/login"}
+{"body":{},"level":"info","method":"GET","params":{"0":"/login"},"service":"user-service","timestamp":"9/7/2023, 10:30:55 AM","url":"/login"}
+{"body":{},"level":"info","method":"GET","params":{"0":"/login"},"service":"user-service","timestamp":"9/7/2023, 10:30:57 AM","url":"/login"}
+{"body":{},"level":"info","method":"GET","params":{"0":"/forgot_password"},"service":"user-service","timestamp":"9/7/2023, 10:37:57 AM","url":"/forgot_password"}
+{"body":{"email":"the@the"},"level":"info","method":"POST","params":{"0":"/forgot_password"},"service":"user-service","timestamp":"9/7/2023, 10:38:53 AM","url":"/forgot_password"}
+{"body":{"email":"the@the"},"level":"info","method":"POST","params":{"0":"/forgot_password"},"service":"user-service","timestamp":"9/7/2023, 10:39:31 AM","url":"/forgot_password"}
+{"body":{},"level":"info","method":"GET","params":{"0":"/forgot_password"},"service":"user-service","timestamp":"9/7/2023, 10:39:36 AM","url":"/forgot_password"}
+{"body":{"email":"fambroderon@gmail.com"},"level":"info","method":"POST","params":{"0":"/forgot_password"},"service":"user-service","timestamp":"9/7/2023, 10:39:41 AM","url":"/forgot_password"}
+{"body":{"email":"fambroderon@gmail.com"},"level":"info","method":"POST","params":{"0":"/forgot_password"},"service":"user-service","timestamp":"9/7/2023, 10:39:45 AM","url":"/forgot_password"}
+{"body":{},"level":"info","method":"GET","params":{"0":"/forgot_password"},"service":"user-service","timestamp":"9/7/2023, 10:39:49 AM","url":"/forgot_password"}

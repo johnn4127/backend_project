@@ -85,6 +85,35 @@ app.post('/login',(req,res)=>{
     res.render("login")
 })
 
+let user={
+  id: "2",
+  email: "theman@gmail.com" ,
+  password: "lilbro"
+}
+const JWT_SECRET='some super secret...'
+app.get('/forgot_password',(req,res,next) =>{
+  res.render("forgot_password")
+})
+
+app.post('/forgot_password',(req,res,next)=>{
+  const {email}=req.body;
+//makes sure user exist in database
+if(email !== user.email){
+
+  res.send('User not found')
+  return;
+}
+//creates a link for the existing user
+
+})
+
+app.get('/reset-password',(req,res,next)=>{
+
+})
+app.post('/reset-password',(req,res,next)=>{
+
+})
+
 app.listen(3000, () =>{
     console.log(`Server is running on port 3000`)
 })
