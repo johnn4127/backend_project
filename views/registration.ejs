@@ -3,6 +3,11 @@
 <form class="container" action="/registration" method="post">
     <div class="form">
         <legend> Create account </legend>
+        <% if (typeof successMessage !=='undefined' ) { %>
+            <p style="color: green;">
+                <%= successMessage %>
+            </p>
+            <% } %>
         <% { %>
             <div class="firstName">
             First Name <input type="text" placeholder="First name" name="firstName"/><br><br></div>
