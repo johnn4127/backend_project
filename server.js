@@ -6,6 +6,7 @@ const bcrypt = require('bcrypt')
 const {Accounts,Books,Histories} = require('./models')
 const jwt=require('jsonwebtoken')
 const sgMail=require('@sendgrid/mail')
+const {user}=require('./models')
 const API_KEY='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'
 sgMail.setApiKey(API_KEY)
 app.use(express.json())
@@ -179,13 +180,20 @@ app.get('/forgot_password',(req,res,next) =>{
   res.render("forgot_password")
 })
 
-app.post('/forgot_password',(req,res,next)=>{
+app.post('/forgot_password',async(req,res,next)=>{
   const {email}=req.body;
 //makes sure user exist in database
-if(email !== user.email){
-  res.send('User not found')
-  return;
-}
+try{
+  const user = await User.findOne({ where: { email } });
+
+    if (!user) {
+      return res.send('User not found');
+    }
+
+// if(email !== user.email){
+//   res.send('User not found')      //(test line!!!)
+//   return;
+// }
 //creates a one time link for the user
 const secret=JWT_SECRET + user.password 
 //stored in the jwt token
@@ -196,10 +204,27 @@ const payload={
 //creating the token and making it expire in 15 min
 const token=jwt.sign(payload,secret,{expiresIn: '15m'})
 const link=`http://localhost:3000/reset-password/${user.id}/${token}` //where the user goes when they click the link
-console.log(link) //send emails here
-res.send(`password reset link has been sent to your email`)
-})
+// console.log(link) //send emails here
+const message = {
+  to: user.email,
+  from: 'snugglereads@gmail.com',
+  subject: 'Password Reset',
+  text: 'Click the link to reset your password: ' + link,
+  html: `<p>Click the link to reset your password:</p><a href="${link}">${link}</a>`,
+};
 
+sgMail.send(message).then(() => {
+  console.log('Email Sent')
+res.send(`password reset link has been sent to your email`)
+}).catch(err => {
+  console.error(err.message);
+  res.send(err.message);
+});
+} catch (err) {
+console.error(err.message);
+res.send(err.message);
+}
+});
 
 
 //this is the rounte the link above takes the user to
@@ -222,25 +247,60 @@ try{
 })
 
 
-app.post('/reset-password/:id/:token',(req,res,next)=>{
+app.post('/reset-password/:id/:token',async(req,res,next)=>{
   const {id,token}=req.params
   const {password,password2}=req.body
-  res.send(user)
-  if(id !== user.id){
-    res.send(`invalid id`)
-    return
+  try {
+    const user = await User.findOne({ where: { id } });
+  // res.send(user)
+  if(!user){
+    return res.send(`invalid id`)
   }
   const secret=JWT_SECRET + user.password
   //validate password and passwoed2 should match
-  try{
-    const payload=jwt.verify(token, secret)
-    user.password=password
-    res.send(user)
-  }catch(err){
-    console.log(err.message)
-    res.send(err.message)
+  const payload = jwt.verify(token, secret);
+
+    // Update the user's password in the database
+    user.password = password;
+    await user.save();
+
+    res.send('Password reset successful');
+  } catch (err) {
+    console.error(err.message);
+    res.send(err.message);
   }
-})
+});
+
+
+//   try{
+//     const payload=jwt.verify(token, secret)
+//     user.password=password
+//     res.send(user)
+//   }catch(err){
+//     console.log(err.message)
+//     res.send(err.message)
+//   }
+// })
+
+
+// const sgMail=require('@sendgrid/mail')
+// const API_KEY='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'
+// sgMail.setApiKey(API_KEY)
+
+
+
+
+// const message={
+//     to: 'deronfambro0112@gmail.com',
+//     from: 'snugglereads@gmail.com',
+//     subject: 'hello from snugglereads',
+//     text: 'hello from sendgrid',
+//     html: '<h1>Hello from Snugglereads</h1>'
+//   }
+//   sgMail
+//   .send(message)
+//   .then(res=>console.log('email sent'))
+//   .catch(error=>console.log(error.message))
 
 
 
