@@ -435,3 +435,10 @@
 {"body":{"email":"fambroderon@gmail.com"},"level":"info","method":"POST","params":{"0":"/forgot_password"},"service":"user-service","timestamp":"9/7/2023, 10:39:41 AM","url":"/forgot_password"}
 {"body":{"email":"fambroderon@gmail.com"},"level":"info","method":"POST","params":{"0":"/forgot_password"},"service":"user-service","timestamp":"9/7/2023, 10:39:45 AM","url":"/forgot_password"}
 {"body":{},"level":"info","method":"GET","params":{"0":"/forgot_password"},"service":"user-service","timestamp":"9/7/2023, 10:39:49 AM","url":"/forgot_password"}
+{"body":{},"level":"info","method":"GET","params":{"0":"/forgot_password"},"service":"user-service","timestamp":"9/7/2023, 11:00:58 AM","url":"/forgot_password"}
+{"body":{},"level":"info","method":"GET","params":{"0":"/forgot_password"},"service":"user-service","timestamp":"9/7/2023, 11:00:58 AM","url":"/forgot_password"}
+{"body":{},"level":"info","method":"GET","params":{"0":"/forgot_password"},"service":"user-service","timestamp":"9/7/2023, 11:01:23 AM","url":"/forgot_password"}
+{"body":{"email":"theman@gmail.com"},"level":"info","method":"POST","params":{"0":"/forgot_password"},"service":"user-service","timestamp":"9/7/2023, 11:01:50 AM","url":"/forgot_password"}
+{"body":{"email":"theman@gmail.com"},"level":"info","method":"POST","params":{"0":"/forgot_password"},"service":"user-service","timestamp":"9/7/2023, 11:02:00 AM","url":"/forgot_password"}
+{"body":{},"level":"info","method":"GET","params":{"0":"/forgot_password"},"service":"user-service","timestamp":"9/7/2023, 11:02:02 AM","url":"/forgot_password"}
+{"body":{"email":"theman@gmail.com"},"level":"info","method":"POST","params":{"0":"/forgot_password"},"service":"user-service","timestamp":"9/7/2023, 11:05:19 AM","url":"/forgot_password"}

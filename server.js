@@ -4,6 +4,7 @@ const app = express();
 const winston = require("winston");
 const bcrypt = require('bcrypt')
 const {Accounts,Books,Histories} = require('./models')
+const jwt=require('jsonwebtoken')
 app.use(express.json())
 //link ejs/css
 app.use(express.static(__dirname + '/public'));
@@ -104,11 +105,20 @@ if(email !== user.email){
   return;
 }
 //creates a link for the existing user
-
+const secret=JWT_SECRET + user.password
+const payload={
+  email: user.email,
+  id: user.id
+}
+const token=jwt.sign(payload,secret,{expiresIn: '15m'})
+const link=`http://localhost:3000/reset-password/${user.id}/${token}`
+console.log(link)
+res.send(`password reset link has been sent to ur email`)
 })
 
-app.get('/reset-password',(req,res,next)=>{
-
+app.get('/reset-password/:id/:token',(req,res,next)=>{
+const {id,token}=req.params
+res.send(req.params)
 })
 app.post('/reset-password',(req,res,next)=>{
 
