@@ -29,7 +29,7 @@ body {
     flex-direction: column; /* Stack items vertically */
     align-items: flex-start; /* Align items at the top of the container */
     background-color: white;
-    height: 600px;
+    height: 1000px;
     width: 500px;
   }
   
@@ -54,11 +54,9 @@ body {
 
   a {
     color: black; /* Set the link color to black */
-    text-decoration: underline; /* Remove underline (if desired) */
+    text-decoration: none; /* Remove underline (if desired) */
     display: block;
     margin-bottom: 20px;
-    /* font-size: 20px; Adjust the font size to your desired value */
+    font-size: 20px; /* Adjust the font size to your desired value */
   }
-
-
   
