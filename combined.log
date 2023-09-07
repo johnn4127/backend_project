@@ -516,3 +516,10 @@
 {"body":{},"level":"info","method":"GET","params":{"0":"/books"},"service":"user-service","timestamp":"9/7/2023, 3:22:25 PM","url":"/books"}
 {"body":{},"level":"info","method":"GET","params":{"0":"/books"},"service":"user-service","timestamp":"9/7/2023, 3:23:10 PM","url":"/books"}
 {"body":{},"level":"info","method":"GET","params":{"0":"/books"},"service":"user-service","timestamp":"9/7/2023, 3:23:43 PM","url":"/books"}
+{"body":{},"level":"info","method":"GET","params":{"0":"/home"},"service":"user-service","timestamp":"9/7/2023, 3:34:32 PM","url":"/home"}
+{"body":{},"level":"info","method":"GET","params":{"0":"/home"},"service":"user-service","timestamp":"9/7/2023, 3:34:32 PM","url":"/home"}
+{"body":{},"level":"info","method":"GET","params":{"0":"/home"},"service":"user-service","timestamp":"9/7/2023, 3:34:47 PM","url":"/home"}
+{"body":{},"level":"info","method":"GET","params":{"0":"/registration"},"service":"user-service","timestamp":"9/7/2023, 3:34:54 PM","url":"/registration"}
+{"body":{},"level":"info","method":"GET","params":{"0":"/login"},"service":"user-service","timestamp":"9/7/2023, 3:34:58 PM","url":"/login"}
+{"body":{},"level":"info","method":"GET","params":{"0":"/registration"},"service":"user-service","timestamp":"9/7/2023, 3:35:01 PM","url":"/registration"}
+{"body":{"email":"johnjo@gmail.com","firstName":"john","lastName":"nguyen","password":"Nguyen123","repassword":"Nguyen123"},"level":"info","method":"POST","params":{"0":"/registration"},"service":"user-service","timestamp":"9/7/2023, 3:35:14 PM","url":"/registration"}
