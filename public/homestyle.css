@@ -1,7 +1,14 @@
-.everything-container {
-    background-color: orange;
-    padding: 20px;
-    border: 1px solid #ddd;
-  
-  }
-  
+
+
+#top-container{
+    padding: 15px;
+    margin: 10px;
+    height: 400px;
+    
+}
+#inner-topContainer-carousel{
+    height: 300px;
+    position: relative;
+    top: 30px;
+    
+}
