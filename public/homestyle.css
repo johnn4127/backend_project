@@ -3,7 +3,7 @@
     padding: 20px;
     border: 1px solid #ddd;
   }
- 
+
 
 
 #top-container{
@@ -36,9 +36,42 @@
  }
 
 .homelargeimageportrait {
- height: 550px;
+ height: 400px;
  object-fit: cover;
  border-radius: 20px;
+
+}
+.stepcontainer{
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+  /* align-items: center; */
+  width: 50vw;
+
+}
+.stepcontainer2{
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center;  */
+  /* align-items: center; */
+  float: left;
+
+}
+
+.steptitle{
+  display: flex;
+  flex-direction: column;
+  justify-content: right; 
+  font-size: 150px;
+}
+
+
+.booktitle{
+
+}
+
+.description{
+
 
 }
 
@@ -46,7 +79,7 @@
   display: flex;
   justify-content: center;
   background-color: white;
-  padding: 150px;
+  padding: 20px 150px;
  }
 
  .largeimagecontainer {
@@ -86,6 +119,18 @@
  background-size: cover;
  height:100vh
 }
+
+#cont6{
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.container6{
+  display: flex;
+
+
+
+}
 .hr-tag {
   height: 20px;
   background-color: black;
@@ -98,6 +143,8 @@ display: flex;
 justify-content: center;
 background-color: cornflowerblue;
 font-size: larger;
+font-family: 'Courier New', Courier, monospace;
+
  }
 
  .navbar2{
@@ -127,3 +174,28 @@ font-size: larger;
   color: black;
  
  }
+
+
+ .container6 {
+  display: flex;
+  flex-direction: row; /* Keep the containers in a row */
+  align-items: center; /* Vertically align the content */
+  justify-content: space-between; /* Space between the image and text */
+  margin-bottom: 20px; /* Add spacing between containers */
+}
+
+.largeimagecontainerwhite {
+  flex: 1; /* Make the image container take up 50% of the width */
+  text-align: right; /* Align the image to the right within its container */
+}
+
+.homelargeimageportrait {
+  max-width: 100%;
+  height: auto;
+  border-radius: 20px;
+}
+
+.stepcontainer2 {
+  flex: 1; /* Make the text container take up 50% of the width */
+  padding: 20px; /* Add padding for spacing between text and image */
+}
