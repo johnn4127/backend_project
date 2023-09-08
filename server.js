@@ -14,10 +14,11 @@ app.use(express.json())
 app.use(express.static(__dirname + '/public'));
 const path = require('path');
 const db = "postgres://oniifgkp:VEr8-v22_Ty-JC7eNMdfoTFRPD8YcjLc@berry.db.elephantsql.com/oniifgkp";
-const { Sequelize } = require("sequelize");
-const sequelize = new Sequelize(db)
+const { Sequelize, DataTypes } = require("sequelize");
+const sequelize = new Sequelize(db) //is this the same thing as line 164
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json());
 
 const logger = winston.createLogger({
     level: 'info',
@@ -59,7 +60,7 @@ app.all('*', (req, res, next) => {
 
   app.get('/home',(req,res) => {
     res.render('home')
-})
+}) //is this suppost to be in the logger? -deron
 
 app.get('/registration',(req,res) => {
     res.render("registration")
@@ -159,11 +160,35 @@ app.post('/login',(req,res)=>{
 
 
 
-let user={
-  id: "2",
-  email: "theman@gmail.com" ,
-  password: "lilbro"
-}
+// db.authenticate()
+//   .then(()=>{
+//     console.log('database connection established')
+//   })
+//   .catch((err)=>{
+//     console.error('unable to connect to the database, err')
+//   });
+
+
+// Define the User model
+const User = sequelize.define('User', {
+  email: {
+    type: DataTypes.STRING,
+    unique: true,
+  },
+  password: {
+    type: DataTypes.STRING,
+  },
+  //should i also include id???
+});
+
+// Sync the model with the database
+module.exports = { User };
+// let user={
+//   id: "2",
+//   email: "theman@gmail.com" ,
+//   password: "lilbro"
+// }
+
 const JWT_SECRET='some super secret...'
 const message={
   to: 'deronfambro0112@gmail.com',
@@ -172,7 +197,7 @@ const message={
   text: 'hello from sendgrid',
   html: '<h1>Hello from Snugglereads</h1>'
 }
-sgMail.send(message).then(res=>console.log('email sent')).catch(err=>console.log(err.message))
+// sgMail.send(message).then(res=>console.log('email sent')).catch(err=>console.log(err.message))
 
 
 
@@ -213,10 +238,10 @@ const message = {
   html: `<p>Click the link to reset your password:</p><a href="${link}">${link}</a>`,
 };
 
-sgMail.send(message).then(() => {
+await sgMail.send(message).then(() => {
   console.log('Email Sent')
-res.send(`password reset link has been sent to your email`)
-}).catch(err => {
+  res.send(`password reset link has been sent to your email`)
+}).catch((err) => {
   console.error(err.message);
   res.send(err.message);
 });
@@ -228,18 +253,18 @@ res.send(err.message);
 
 
 //this is the rounte the link above takes the user to
-app.get('/reset-password/:id/:token',(req,res,next)=>{
+app.get('/reset-password/:id/:token', async(req,res,next)=>{
 const {id,token}=req.params
-
-//this checks if the id is in the database
-if(id !== user.id){
+try{
+  const user=await User.findOne({ where: { id } })
+  //this checks if the id is in the database
+if(!user){
   res.send(`invalid id`)
   return
 }
 const secret=JWT_SECRET + user.password
-try{
-  const payload=jwt.verify(token, secret)
-  res.render('reset-password',{email: user.email})
+const payload=jwt.verify(token, secret)
+res.render('reset-password',{email: user.email})
 }catch(err){
   console.log(err.message)
   res.send(err.message)
@@ -253,23 +278,33 @@ app.post('/reset-password/:id/:token',async(req,res,next)=>{
   try {
     const user = await User.findOne({ where: { id } });
   // res.send(user)
-  if(!user){
-    return res.send(`invalid id`)
-  }
   const secret=JWT_SECRET + user.password
   //validate password and passwoed2 should match
   const payload = jwt.verify(token, secret);
-
-    // Update the user's password in the database
-    user.password = password;
-    await user.save();
-
-    res.send('Password reset successful');
-  } catch (err) {
-    console.error(err.message);
-    res.send(err.message);
+  
+  if(!user){
+    return res.send(`invalid id`)
   }
+  if(password !== password2){
+    return res.send('passwords do not match')
+  }
+  // Update the user's password in the database
+  user.password = password;
+  await user.save();
+
+  res.send('Password reset successful');
+} catch (err) {
+  console.error(err.message);
+  res.send('password reset failed');
+}
 });
+  
+  
+  
+  
+  
+  
+
 
 
 //   try{
