@@ -62,15 +62,23 @@
   display: flex;
   flex-direction: column;
   justify-content: right; 
-  font-size: 150px;
+  font-size: 25px;
 }
 
 
 .booktitle{
+  display: flex;
+  flex-direction: column;
+  justify-content: right; 
+  font-size: 25px;
 
 }
 
 .description{
+  display: flex;
+  flex-direction: column;
+  justify-content: right; 
+  font-size: 25px;
 
 
 }
@@ -85,7 +93,7 @@
  .largeimagecontainer {
   display: flex;
   justify-content: center;
-  padding: 150px;
+  padding: 20px;
  }
 
  .header-title{
