@@ -74,6 +74,18 @@ app.get('/registration',(req,res) => {
     res.render("registration")
 })
 
+app.get('/account',(req,res) => {
+    res.render('myAccount')
+})
+
+app.get('/update',(req,res) => {
+    res.render('update_info')
+    
+})
+
+
+
+
 
 
   
