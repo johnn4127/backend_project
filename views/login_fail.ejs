@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link href="login_fail.css" rel="stylesheet">
+</head>
+<body>
+    <h1 id="header">SnuggleReads</h1>
+    <h2 id="header2">Login</h2>
+
+    <div class="content-container">
+        <div id="text-container">
+            <div id="p1">
+                <p>Sign-In</p>
+
+                <form class="container" action="/login" method="post">
+                    <div class="form">
+                        <legend></legend>
+                        <% if (error) { %>
+                            <p class="error-message"><%= error %></p>
+                        <% } %>
+                        <div class="email">
+                            Email <input type="email" name="email" value="" /><br><br>
+                        </div>
+                        <div class="password">
+                            Password <input type="password" minlength="8" maxlength="25" name="password" value="" /><br><br>
+                        </div>
+                        <button onclick="">Sign in</button>
+
+                        <div class="line"></div>
+
+                        <p class="account">Need to create an account?. <a href="./registration">Register</a></p>
+                    </div>
+
+                    <a href="/home">Back to Home</a>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    
+</body>
+</html>
