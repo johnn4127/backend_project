@@ -322,17 +322,27 @@ app.post('/reset-password/:id/:token',async(req,res,next)=>{
   const {id,token}=req.params
   const {password,repassword}=req.body
   try {
+    const userId = parseInt(id, 10);
+
+    if (isNaN(userId)) {
+      return res.send('Invalid user ID');
+    }
     const user = await Accounts.findOne({ where: { id } });
 
   const secret=JWT_SECRET + user.password
-  //validate password and passwoed2 should match
   payload = jwt.verify(token, secret);
+  console.log(req.body)
   
   if(!user){
     return res.send(`invalid id`)
   }
-  if(password !== repassword){
-    return res.send('passwords do not match')
+  console.log('Password:', password);
+  console.log('Repassword:', repassword);
+  console.log('ID:', id);
+  console.log('Token:', token);
+  if (password.trim() !== repassword.trim()) {
+    console.log('Passwords do not match');
+    return res.send('Passwords do not match');
   }else{
   // Update the user's password in the database
   user.password = password;
@@ -341,11 +351,25 @@ app.post('/reset-password/:id/:token',async(req,res,next)=>{
   res.send('Password reset successful');
   }
 } catch (err) {
-  console.error(err.message);
+  console.error(err);
   res.send('password reset failed');
 }
 });
   
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   
 
 //   try{
