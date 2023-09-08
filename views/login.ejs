@@ -1,19 +1,54 @@
-<link rel="stylesheet" href="/login.css">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Snuggle Reads</title>
+    <link href="login.css" rel="stylesheet">
+</head>
+<body>
+    <h1 id = "header">SnuggleReads</h1>
+    <h2 id = "header2">Login</h2>
+    
+    <div class="content-container">
+        <div id="text-container">
+          <div id="p1">
+            <p>Sign-In</p>
 
-<form class="container" action="/login" method="post">
-    <div class="form">
-        <legend> Sign in </legend>
-        <% { %>
-            <div class="email">
-            Email <input type="email" name="email" value="" /><br><br></div>
-            <div class="password">
-            Password <input type="password" minlength="8" maxlength="25" name="password" value="" /><br><br></div>
-        <% } %>
-        <button onclick="">Sign in</button>
-        <div class="line"></div>
-        <p class="account">Need to create an account?. <a href="./registration">Register</a></p>
-        <!-- <p id="forgotPassword">Forgot Password? <a href="">Reset Password!</a></p> -->
+              
+
+            <form class="container" action="/login" method="post">
+              <div class="form">
+                  <legend></legend>
+                  <% { %>
+                      <div class="email">
+                      Email <input type="email" name="email" value="" /><br><br></div>
+                      <div class="password">
+                      Password <input type="password" minlength="8" maxlength="25" name="password" value="" /><br><br></div>
+                  <% } %>
+                  <button onclick="">Sign in</button>
+
+                  
+                  <div class="line"></div>
+                  
+                  
+                  <p class="account">Need to create an account?. <a href="./registration">Register</a></p>
+                  <!-- <p id="forgotPassword">Forgot Password? <a href="">Reset Password!</a></p> -->
+              </div>
+              
+              <a href="/home">Back to Home</a>
+              </form>
+
+              
+            
+            
+
+            
+            
+            
     </div>
-    <!-- <input type="submit" value="Create your IMDb account"> -->
-    <p>hello</p>
-    </form>
+
+    
+      

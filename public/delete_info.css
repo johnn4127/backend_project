@@ -29,7 +29,7 @@ body {
     flex-direction: column; /* Stack items vertically */
     align-items: flex-start; /* Align items at the top of the container */
     background-color: white;
-    height: 5000px;
+    height: 500px;
     width: 500px;
   }
   
@@ -79,6 +79,3 @@ body {
     margin-bottom: 20px;
     /* font-size: 20px; Adjust the font size to your desired value */
   }
-
-
-  
