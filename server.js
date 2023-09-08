@@ -59,6 +59,7 @@ app.all('*', (req, res, next) => {
   app.get('/home', (req, res) => {
     const userName = req.query.name; 
     res.render('home', { userName });
+    
   });
 
   app.get('/userhome', async (req, res) => {
