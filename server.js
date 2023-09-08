@@ -7,7 +7,7 @@ const {Accounts,Books,Histories} = require('./models')
 const jwt=require('jsonwebtoken')
 const sgMail=require('@sendgrid/mail')
 const {user}=require('./models')
-const API_KEY='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'
+const API_KEY= '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'                                   //'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'
 sgMail.setApiKey(API_KEY)
 app.use(express.json())
 //link ejs/css
@@ -222,20 +222,15 @@ app.post('/login', async (req, res) => {
 
 
 
-
-// let user={
-//   id: "2",
-//   email: "theman@gmail.com" ,
-//   password: "lilbro"
-// }
+// const JWT_SECRET='7h3m0s7r6nd0ms7ringyou3vers6w'
 const JWT_SECRET='some super secret...'
-const message={
-  to: 'deronfambro0112@gmail.com',
-  from: 'snugglereads@gmail.com',
-  subject: 'hello from snugglereads',
-  text: 'hello from sendgrid',
-  html: '<h1>Hello from Snugglereads</h1>'
-}
+// const message={
+//   to: 'deronfambro0112@gmail.com',
+//   from: 'snugglereads@gmail.com',
+//   subject: 'hello from snugglereads',
+//   text: 'hello from sendgrid',
+//   html: '<h1>Hello from Snugglereads</h1>'
+// }
 // sgMail.send(message).then(res=>console.log('email sent')).catch(err=>console.log(err.message))
 
 
@@ -261,12 +256,9 @@ try{
       email: user.email,
       id: user.id
     }
-    // if(email !== user.email){
-    //   res.send('User not found')      //(test line!!!)
-    //   return;
-    // }
-//creating the token and making it expire in 15 min
-const token=jwt.sign(payload,secret,{expiresIn: '15m'})
+    
+//creating the token and making it expire in 1 day
+const token=jwt.sign(payload,secret,{expiresIn: '1d'})
 const link=`http://localhost:3000/reset-password/${user.id}/${token}` //where the user goes when they click the link
 // console.log(link) //send emails here
 const message = {
@@ -277,18 +269,30 @@ const message = {
   html: `<p>Click the link to reset your password:</p><a href="${link}">${link}</a>`,
 };
 
-await sgMail.send(message).then(() => {
+await sgMail.send(message)
+.then(() => {
   console.log('Email Sent')
   res.send(`password reset link has been sent to your email`)
-}).catch((err) => {
-  console.error(err.message);
-  res.send(err.message);
+})
+.catch((err) => {
+  console.error(err);
+  res.send(err);
 });
-} catch (err) {
-console.error(err.message);
-res.send(err.message);
+} catch (err) 
+{
+console.error(err);
+res.send(err);
 }
 });
+
+
+
+
+
+
+
+
+
 
 
 //this is the rounte the link above takes the user to
@@ -302,36 +306,40 @@ if(!user){
   return
 }
 const secret=JWT_SECRET + user.password
-const payload=jwt.verify(token, secret)
+console.log('token:',token)
+console.log('secret:',secret)
+payload=jwt.verify(token, secret)
+console.log('payload',payload)
 res.render('reset-password',{email: user.email})
 }catch(err){
-  console.log(err)
-  res.send()
+  console.log(token)
+  res.send('an error occured during password reset')
 }
 })
 
 
 app.post('/reset-password/:id/:token',async(req,res,next)=>{
   const {id,token}=req.params
-  const {password,password2}=req.body
+  const {password,repassword}=req.body
   try {
     const user = await Accounts.findOne({ where: { id } });
-  // res.send(user)
+
   const secret=JWT_SECRET + user.password
   //validate password and passwoed2 should match
-  const payload = jwt.verify(token, secret);
+  payload = jwt.verify(token, secret);
   
   if(!user){
     return res.send(`invalid id`)
   }
-  if(password !== password2){
+  if(password !== repassword){
     return res.send('passwords do not match')
-  }
+  }else{
   // Update the user's password in the database
   user.password = password;
   await user.save();
 
   res.send('Password reset successful');
+  }
 } catch (err) {
   console.error(err.message);
   res.send('password reset failed');
