@@ -1,0 +1,61 @@
+body {
+    background-color:#E2C799;
+    margin: 0; /* Remove default margin to fill the entire viewport */
+  }
+  
+  #header {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 70px;
+  }
+  
+  #header2 {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 40px;
+  }
+  
+  .content-container {
+    display: flex;
+    justify-content: flex-start; /* Place the content-container at the left edge of the page */
+    align-items: flex-start; /* Align items at the top of the page */
+    background-color:#F2ECBE;
+    padding: 20px;
+    border: 1px solid #ddd;
+    max-width: 100%; /* Make sure it doesn't overflow the viewport */
+  }
+  
+
+  #text-container {
+    display: flex;
+    flex-direction: column; /* Stack items vertically */
+    align-items: flex-start; /* Align items at the top of the container */
+    background-color:white;
+    height: 1000px;
+    width: 500px;
+  }
+  
+  #p1 {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 30px;
+  }
+  
+  .bigphoto {
+    text-align: right;
+    max-width: 50%;
+    margin-left: auto;
+    position: absolute; /* Position the image absolutely */
+    top: 0; /* Position it at the top of the .content-container */
+    right: 0; /* Position it at the right of the .content-container */
+  }
+  
+  .bookshelf {
+    max-width: 100%;
+    height: 1000px;
+  }
+
+  a {
+    color: black; /* Set the link color to black */
+    text-decoration: none; /* Remove underline (if desired) */
+    display: block;
+    margin-bottom: 20px;
+    font-size: 20px; /* Adjust the font size to your desired value */
+  }
