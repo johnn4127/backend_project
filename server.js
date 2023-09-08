@@ -158,20 +158,20 @@ app.post('/login',(req,res)=>{
 
 
 
-let user={
-  id: "2",
-  email: "theman@gmail.com" ,
-  password: "lilbro"
-}
-const JWT_SECRET='some super secret...'
-const message={
-  to: 'deronfambro0112@gmail.com',
-  from: 'snugglereads@gmail.com',
-  subject: 'hello from snugglereads',
-  text: 'hello from sendgrid',
-  html: '<h1>Hello from Snugglereads</h1>'
-}
-sgMail.send(message).then(res=>console.log('email sent')).catch(err=>console.log(err.message))
+// let user={
+//   id: "2",
+//   email: "theman@gmail.com" ,
+//   password: "lilbro"
+// }
+// const JWT_SECRET='some super secret...'
+// const message={
+//   to: 'deronfambro0112@gmail.com',
+//   from: 'snugglereads@gmail.com',
+//   subject: 'hello from snugglereads',
+//   text: 'hello from sendgrid',
+//   html: '<h1>Hello from Snugglereads</h1>'
+// }
+// sgMail.send(message).then(res=>console.log('email sent')).catch(err=>console.log(err.message,'136'))
 
 
 

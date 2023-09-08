@@ -7,20 +7,32 @@
     <link rel="stylesheet" href="books.css">
 </head>
 <body>
-    <% allBooks.forEach(book => { %>
-        <div class="flip-card">
-            <div class="flip-card-inner">
-                <div class="flip-card-front">
-                    <img src = '<%= book.dataValues.images %>'  alt="Avatar" style="width:300px;height:300px;">
+    <div id="flip-card-container">
+        <% allBooks.forEach(book => { %>
+            <div class="flip-card">
+                <h3><%= book.dataValues.book_name %></h3>
+                <div class="flip-card-inner">
+                    <div class="flip-card-front">
+                        <img src="<%= book.dataValues.images %>" alt="Avatar">
+                    </div>
+                    <div class="flip-card-back">
+                        <h1><%= book.dataValues.book_name %></h1>
+                        <p><%= book.dataValues.author %></p>
+                        <p><%= book.dataValues.genre %></p>
+                        
+                    </div>
                 </div>
-                <div class="flip-card-back">
-                    <h1><%= book.dataValues.book_name %></h1>
-                    <p><%= book.dataValues.author %></p>
-                    <p><%= book.dataValues.genre %></p>
-                </div>
+                <button onclick="funcname()" id="add-to-account-btn" value="<%= book.dataValues.id %>">Add to Account History</button>
             </div>
-        </div>
-    <% }); %>
-    <img src="https://tinyurl.com/2s3sya9n" alt="hello">
+        <% }); %>
+    </div>
+
+    <!-- Add your JavaScript function here -->
+    <script>
+        function funcname() {
+            // Add your logic here
+            alert('Button clicked!');
+        }
+    </script>
 </body>
 </html>
