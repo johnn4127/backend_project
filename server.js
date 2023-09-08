@@ -209,23 +209,23 @@ app.post('/forgot_password',async(req,res,next)=>{
   const {email}=req.body;
 //makes sure user exist in database
 try{
-  const user = await User.findOne({ where: { email } });
+  const user = await Accounts.findOne({ where: { email } });
 
     if (!user) {
       return res.send('User not found');
     }
 
-// if(email !== user.email){
-//   res.send('User not found')      //(test line!!!)
-//   return;
-// }
-//creates a one time link for the user
-const secret=JWT_SECRET + user.password 
-//stored in the jwt token
-const payload={
-  email: user.email,
-  id: user.id
-}
+    //creates a one time link for the user
+    const secret=JWT_SECRET + user.password 
+    //stored in the jwt token
+    const payload={
+      email: user.email,
+      id: user.id
+    }
+    // if(email !== user.email){
+    //   res.send('User not found')      //(test line!!!)
+    //   return;
+    // }
 //creating the token and making it expire in 15 min
 const token=jwt.sign(payload,secret,{expiresIn: '15m'})
 const link=`http://localhost:3000/reset-password/${user.id}/${token}` //where the user goes when they click the link
@@ -256,7 +256,7 @@ res.send(err.message);
 app.get('/reset-password/:id/:token', async(req,res,next)=>{
 const {id,token}=req.params
 try{
-  const user=await User.findOne({ where: { id } })
+  const user=await Accounts.findOne({ where: { id } })
   //this checks if the id is in the database
 if(!user){
   res.send(`invalid id`)
@@ -276,7 +276,7 @@ app.post('/reset-password/:id/:token',async(req,res,next)=>{
   const {id,token}=req.params
   const {password,password2}=req.body
   try {
-    const user = await User.findOne({ where: { id } });
+    const user = await Accounts.findOne({ where: { id } });
   // res.send(user)
   const secret=JWT_SECRET + user.password
   //validate password and passwoed2 should match
