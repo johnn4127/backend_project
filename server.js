@@ -13,7 +13,7 @@ app.use(express.json())
 app.use(express.static(__dirname + '/public'));
 const path = require('path');
 const db = "postgres://oniifgkp:VEr8-v22_Ty-JC7eNMdfoTFRPD8YcjLc@berry.db.elephantsql.com/oniifgkp";
-const { Sequelize } = require("sequelize");
+const { Sequelize, DataTypes } = require('sequelize');
 const sequelize = new Sequelize(db)
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -56,9 +56,19 @@ app.all('*', (req, res, next) => {
       next();
   })
 
-  app.get('/home',(req,res) => {
-    res.render('home')
-})
+  app.get('/home', (req, res) => {
+    const userName = req.query.name; 
+    res.render('home', { userName });
+  });
+
+  app.get('/userhome', async (req, res) => {
+    const { email } = req.query;
+    res.render('userhome', { email: email})
+  });
+
+
+  
+  
 
 app.get('/registration',(req,res) => {
     res.render("registration")
@@ -72,6 +82,27 @@ app.get('/update',(req,res) => {
     res.render('update_info')
     
 })
+
+
+
+
+
+
+  
+app.get('/account',(req,res) => {
+    res.render('myAccount')
+})
+
+app.get('/update',(req,res) => {
+    res.render('update_info')
+    
+})
+
+// Assuming you're using Express
+app.get('/delete', (req, res) => {
+    res.render('delete_info'); // Render the delete_account.ejs template
+  });
+  
 
 
 
@@ -131,6 +162,8 @@ app.post('/registration', async(req,res) => {
           password: hashedPassword, // Store the hashed password
           repassword: hashedPassword, // Store the hashed password
         });
+
+        
         res.render('registration',{ successMessage: 'Account created successfully' })
 }catch (err){
     console.log(err)
@@ -150,10 +183,39 @@ app.get('/login',(req,res) =>{
     res.render("login")
 })
 
-app.post('/login',(req,res)=>{
-    res.render("home")
+app.post('/login', async (req, res) => {
+    const { email, password } = req.body;
 
-})
+    try {
+        // Assuming you have a Sequelize model named Accounts
+        const user = await Accounts.findOne({ where: { email } });
+
+        if (!user) {
+            // Handle the case where the user doesn't exist
+            return res.render('login_fail', { error: 'Account not found' }); // Pass the error message
+        }
+
+        // Check if the provided password matches the user's password (you should have password hashing logic)
+        // For example, you can use bcrypt to compare the hashed password
+        const passwordMatch = await bcrypt.compare(password, user.password);
+
+        if (!passwordMatch) {
+            // Handle incorrect password
+            return res.render('login_fail', { error: 'Incorrect password' }); // Pass the error message
+        }
+
+        // Redirect to userhome with the email as a query parameter
+        return res.redirect('/userhome?email=' + encodeURIComponent(email));
+    } catch (error) {
+        // Handle any database errors or other errors
+        console.error('Error during login:', error);
+        return res.status(500).send('Internal Server Error');
+    }
+});
+
+
+  
+  
 
 
 
@@ -163,6 +225,32 @@ let user={
   email: "theman@gmail.com" ,
   password: "lilbro"
 }
+
+app.post('/delete_account', async (req, res) => {
+    const { email } = req.body;
+  
+    try {
+      // Assuming you have a Sequelize model named User
+      const user = await Accounts.findOne({ where: { email } });
+  
+      if (!user) {
+        // Handle the case where the user doesn't exist
+        return res.status(404).send('User not found');
+      }
+  
+      // Delete the user
+      await user.destroy();
+  
+      // Redirect to a confirmation page
+      return res.redirect('/home'); // Redirect to a confirmation page
+    } catch (error) {
+      // Handle any database errors with a more user-friendly message
+      console.error('Error deleting user:', error);
+      return res.status(500).send('An error occurred while deleting the account. Please try again later.');
+    }
+  });
+  
+  
 const JWT_SECRET='some super secret...'
 const message={
   to: 'deronfambro0112@gmail.com',
