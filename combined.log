@@ -1780,3 +1780,7 @@
 {"body":{},"level":"info","method":"GET","params":{"0":"/"},"service":"user-service","timestamp":"9/8/2023, 9:58:57 AM","url":"/"}
 {"body":{},"level":"info","method":"GET","params":{"0":"/books"},"service":"user-service","timestamp":"9/8/2023, 9:59:00 AM","url":"/books"}
 {"body":{},"level":"info","method":"GET","params":{"0":"/books"},"service":"user-service","timestamp":"9/8/2023, 10:31:49 AM","url":"/books"}
+{"body":{},"level":"info","method":"GET","params":{"0":"/books"},"service":"user-service","timestamp":"9/8/2023, 10:51:56 AM","url":"/books"}
+{"body":{},"level":"info","method":"GET","params":{"0":"/books"},"service":"user-service","timestamp":"9/8/2023, 10:54:40 AM","url":"/books"}
+{"body":{},"level":"info","method":"GET","params":{"0":"/books"},"service":"user-service","timestamp":"9/8/2023, 10:54:48 AM","url":"/books"}
+{"body":{},"level":"info","method":"GET","params":{"0":"/api-docs"},"service":"user-service","timestamp":"9/8/2023, 10:55:44 AM","url":"/api-docs"}
