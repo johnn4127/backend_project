@@ -1803,3 +1803,6 @@
 {"body":{},"level":"info","method":"GET","params":{"0":"/home"},"service":"user-service","timestamp":"9/8/2023, 10:32:29 AM","url":"/home"}
 {"body":{},"level":"info","method":"GET","params":{"0":"/home"},"service":"user-service","timestamp":"9/8/2023, 10:32:45 AM","url":"/home"}
 {"body":{},"level":"info","method":"GET","params":{"0":"/home"},"service":"user-service","timestamp":"9/8/2023, 10:33:13 AM","url":"/home"}
+{"body":{},"level":"info","method":"GET","params":{"0":"/reset-password"},"service":"user-service","timestamp":"9/8/2023, 11:08:03 AM","url":"/reset-password"}
+{"body":{},"level":"info","method":"GET","params":{"0":"/forgot_password"},"service":"user-service","timestamp":"9/8/2023, 11:08:13 AM","url":"/forgot_password"}
+{"body":{"email":"deronistrash@gmail.com"},"level":"info","method":"POST","params":{"0":"/forgot_password"},"service":"user-service","timestamp":"9/8/2023, 11:08:19 AM","url":"/forgot_password"}
