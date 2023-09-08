@@ -58,9 +58,20 @@ app.all('*', (req, res, next) => {
       next();
   })
 
-  app.get('/home',(req,res) => {
-    res.render('home')
-})
+  app.get('/home', (req, res) => {
+    const userName = req.query.name; 
+    res.render('home', { userName });
+    
+  });
+
+  app.get('/userhome', async (req, res) => {
+    const { email } = req.query;
+    res.render('userhome', { email: email})
+  });
+
+
+  
+  
 
 app.get('/registration',(req,res) => {
     res.render("registration")
