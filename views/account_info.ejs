@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accounts List</title>
+</head>
+<body>
+    <h1>List of Accounts</h1>
+    <style>
+        
+        li {
+            margin-bottom: 20px;
+            border-bottom: 1px solid #ccc;
+            padding-bottom: 10px;
+        }
+    </style>
+
+    <% if (accounts.length > 0) { %>
+        <ul>
+            <% accounts.forEach(account => { %>
+                <li>
+                    ID: <%= account.id %><br>
+                    First Name: <%= account.firstName %><br>
+                    Last Name: <%= account.lastName %><br>
+                    Email: <%= account.email %><br>
+                    Password: <%= account.password %><br>
+                    Re-Entered Password: <%= account.repassword %>
+                </li>
+            <% }); %>
+        </ul>
+    <% } else { %>
+        <p>No account information available.</p>
+    <% } %>
+
+    
+</body>
+</html>
+

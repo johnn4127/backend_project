@@ -1,42 +1,68 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    
+    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Snuggle Reads</title>
     <link href="delete_info.css" rel="stylesheet">
 </head>
 <body>
-    <h1 id="header">SnuggleReads</h1>
-    <h2 id="header2">Your Information</h2>
-
+    <h1 id = "header">SnuggleReads</h1>
+    <h2 id = "header2">Your Information</h2>
+    
     <div class="content-container">
         <div id="text-container">
-            <div id="p1">
-                <p>Enter Your Email and Password to Delete Account</p>
-
-                <form class="delete-account-form" method="post" action="/delete_account">
-                    <!-- Email input -->
-                    Email: <input type="email" name="email" required /><br><br>
-                    <!-- Password input for confirming identity -->
-                    Password: <input type="password" name="password" required /><br><br>
-
-                    <input type="submit" value="Delete Account" /><br><br>
-                </form>
-
-                <!-- Add your existing content here -->
-
-                <a href="/account">Back to My Account</a>
-                <a href="/home">Back to Home</a>
-            </div>
+          <div id="p1">
+            <p style="text-decoration: underline;">Enter Your Email</p>
+      
+            <form class="delete-account-form" method="post" action="/delete_account">
+              <!-- Email input -->
+              Email: <input type="email" name="email" required /><br><br>
+              <!-- You can add other input fields if needed -->
+      
+              <style>
+                /* Style the button */
+                #updateButton {
+                  background-color: #9A3B3B; 
+                  font-family:'Courier New', Courier, monospace;
+                  font-size: large;
+                  color: white; 
+                  padding: 10px 20px; 
+                  border: none; 
+                  cursor: pointer; 
+                  border-radius: 10px;
+                  
+                  
+                }
+              
+                /* Style the button on hover */
+                #updateButton:hover {
+                  background-color: #C08261;
+                }
+              </style>
+              <input type="submit" id="updateButton" value="Delete Account" /><br><br>
+            </form>
+      
+            <!-- Add your existing content here -->
+      
+            <a href="/account">Back to My Account</a>
+            <a href="/">Back to Home</a>
+          </div>
         </div>
-    </div>
+      </div>
+      
+              
 
-    <div class="bigphoto">
-        <div class="bookshelf">
+            
+        
+        
+        <div class="bigphoto">
+          <div class="bookshelf">
             <img src="https://images.unsplash.com/photo-1462392627162-2baa2b3518a8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2103&q=80" alt="" class="bookshelf">
+          </div>
+          
         </div>
-    </div>
-    </div>
-</body>
-</html>
+      </div>
+      
