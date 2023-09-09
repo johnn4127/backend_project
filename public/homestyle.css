@@ -37,9 +37,17 @@
 
 .homelargeimageportrait {
  height: 400px;
+ width: 450px;
  object-fit: cover;
+ object-position: center top;
  border-radius: 20px;
-
+}
+.homelargeimageportrait2 {
+ height: 400px;
+ width: 450px;
+ object-fit: cover;
+ object-position: 50% 20%;
+ border-radius: 20px;
 }
 .stepcontainer{
   display: flex;
@@ -92,7 +100,17 @@
   justify-content: center;
   background-color: white;
   padding: 20px 150px;
-  height: 400px
+  /* height: 400px;
+  width: 500px;
+  object-fit: cover; */
+ }
+
+ .largeimagecontainerwhite2 {
+  display: flex;
+  justify-content: center;
+  background-color: white;
+  padding: 20px 150px 20px 40px;
+  /* height: 400px */
  }
 
  .largeimagecontainer {
@@ -200,15 +218,16 @@ font-family: 'Courier New', Courier, monospace;
 }
 
 .largeimagecontainerwhite {
-  flex: 1; /* Make the image container take up 50% of the width */
+  /* Make the image container take up 50% of the width */
+  /* flex: 1;  */
   text-align: right; /* Align the image to the right within its container */
 }
 
-.homelargeimageportrait {
+/* .homelargeimageportrait {
   max-width: 100%;
   height: auto;
   border-radius: 20px;
-}
+} */
 
 .stepcontainer2 {
   flex: 1; /* Make the text container take up 50% of the width */
@@ -232,8 +251,13 @@ body{
 	max-width: 1170px;
 	margin:auto;
 }
+.carouselContainer{
+  display: flex;
+  justify-content: center;
+}
 .row{
 	display: flex;
+  justify-content: space-between;
 	flex-wrap: wrap;
 }
 ul{
