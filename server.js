@@ -323,53 +323,41 @@ app.post('/reset-password/:id/:token',async(req,res,next)=>{
   const {password,repassword}=req.body
   try {
     const userId = parseInt(id, 10);
-
+    
     if (isNaN(userId)) {
       return res.send('Invalid user ID');
     }
-    const user = await Accounts.findOne({ where: { id } });
+    const user = await Accounts.findOne({ where: { id: userId } });  //remove iser id if err
+    
+    if(!user){
+      return res.send(`invalid id`)
+    }
+    
+    const secret=JWT_SECRET + user.password
+    payload = jwt.verify(token, secret);
 
-  const secret=JWT_SECRET + user.password
-  payload = jwt.verify(token, secret);
-  console.log(req.body)
-  
-  if(!user){
-    return res.send(`invalid id`)
-  }
-  console.log('Password:', password);
-  console.log('Repassword:', repassword);
-  console.log('ID:', id);
-  console.log('Token:', token);
   if (password.trim() !== repassword.trim()) {
     console.log('Passwords do not match');
     return res.send('Passwords do not match');
-  }else{
+  }
+  const saltRounds = 10;
+  const hashedNewPassword = await bcrypt.hash(password, saltRounds);
   // Update the user's password in the database
-  user.password = password;
+  user.password = hashedNewPassword;
   await user.save();
+  
+  const updatedUser = await Accounts.findOne({ where: { id: userId } });
+  if (updatedUser && updatedUser.password !== hashedNewPassword) {
+    console.log('Password update failed in the database');
+    return res.send('Password update failed');
+  }
 
   res.send('Password reset successful');
-  }
 } catch (err) {
   console.error(err);
-  res.send('password reset failed');
+  res.send('Password reset failed');
 }
 });
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   
 
 //   try{
@@ -398,10 +386,6 @@ app.post('/reset-password/:id/:token',async(req,res,next)=>{
 //   .send(message)
 //   .then(res=>console.log('email sent'))
 //   .catch(error=>console.log(error.message))
-
-
-
-
 
 
 app.listen(3000, () =>{
