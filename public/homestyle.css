@@ -251,10 +251,6 @@ body{
 	max-width: 1170px;
 	margin:auto;
 }
-.carouselContainer{
-  display: flex;
-  justify-content: center;
-}
 .row{
 	display: flex;
   justify-content: space-between;
