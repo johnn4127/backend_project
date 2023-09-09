@@ -14,6 +14,8 @@
     "sequelize": "^6.32.1",
     "sequelize-cli": "^6.6.1",
     "sqlite3": "^5.1.6",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.0",
     "winston": "^3.10.0"
   },
   "scripts": {
@@ -25,5 +27,8 @@
   "main": "server.js",
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "swagger-ui-dist": "^5.6.2"
+  }
 }

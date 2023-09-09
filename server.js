@@ -1,5 +1,6 @@
 const express = require('express')
 const bodyParser = require('body-parser');
+
 const app = express();
 const winston = require("winston");
 const bcrypt = require('bcrypt')
@@ -9,6 +10,7 @@ const sgMail=require('@sendgrid/mail')
 const API_KEY='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'
 sgMail.setApiKey(API_KEY)
 app.use(express.json())
+const swaggerJSDoc = require('swagger-jsdoc');
 //link ejs/css
 app.use(express.static(__dirname + '/public'));
 const path = require('path');
@@ -17,6 +19,45 @@ const { Sequelize, DataTypes } = require('sequelize');
 const sequelize = new Sequelize(db)
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: false }))
+// const swaggerUi = require('swagger-ui-express');
+// const swaggerDocument = require('./swagger.json');
+// const express = require('express');
+// const app = express();
+const swaggerUi = require('swagger-ui-express');
+
+var options = {
+  explorer: true,
+  swaggerOptions: {
+    urls: [
+      {
+        url: 'http://petstore.swagger.io/v2/swagger.json',
+        name: 'Spec1'
+      },
+      {
+        url: 'http://petstore.swagger.io/v2/swagger.json',
+        name: 'Spec2'
+      }
+    ]
+  }
+}
+const swaggerOptions = {
+  swaggerDefinition: {
+    info: {
+      title: 'Your API Title',
+      version: '1.0.0',
+      description: 'Description of your API',
+    },
+  },
+  apis: ['./index.js'], // Specify the path to your main route file (index.js in this case)
+};
+const swaggerSpec = swaggerJSDoc(swaggerOptions);
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(null, options));
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+// app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+
 
 const logger = winston.createLogger({
     level: 'info',
@@ -56,10 +97,12 @@ app.all('*', (req, res, next) => {
       next();
   })
 
+
+
   app.get('/home', (req, res) => {
     const userName = req.query.name; 
     res.render('home', { userName });
-    
+
   });
 
   app.get('/userhome', async (req, res) => {
@@ -238,7 +281,7 @@ app.post('/delete_account', async (req, res) => {
         // Handle the case where the user doesn't exist
         return res.status(404).send('User not found');
       }
-  
+      
       // Delete the user
       await user.destroy();
   
@@ -333,15 +376,14 @@ app.post('/reset-password/:id/:token',(req,res,next)=>{
 
 
 
-
+app.get('/books', async(req,res) => {
+  
+  const allBooks = await Books.findAll()
+  
+  res.render("books", {allBooks:allBooks})
+})
 
 
 app.listen(3000, () =>{
     console.log(`Server is running on port 3000`)
-})
-
-app.get('/books', async(req,res) => {
-  const allBooks = await Books.findAll()
-  
-  res.render("books", {allBooks:allBooks})
 })
