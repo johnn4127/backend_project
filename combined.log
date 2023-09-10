@@ -2392,3 +2392,11 @@
 {"body":{},"level":"info","method":"GET","params":{"0":"/login"},"service":"user-service","timestamp":"9/10/2023, 6:21:09 PM","url":"/login"}
 {"body":{"email":"fambroderon@gmail.com","password":"12345678"},"level":"info","method":"POST","params":{"0":"/login"},"service":"user-service","timestamp":"9/10/2023, 6:21:20 PM","url":"/login"}
 {"body":{"email":"fambroderon@gmail.com","password":"0987654321"},"level":"info","method":"POST","params":{"0":"/login"},"service":"user-service","timestamp":"9/10/2023, 6:21:31 PM","url":"/login"}
+{"body":{},"level":"info","method":"GET","params":{"0":"/login"},"service":"user-service","timestamp":"9/10/2023, 6:34:27 PM","url":"/login"}
+{"body":{"email":"fambroderon@gmail.com","password":"fambro123"},"level":"info","method":"POST","params":{"0":"/login"},"service":"user-service","timestamp":"9/10/2023, 6:34:34 PM","url":"/login"}
+{"body":{},"level":"info","method":"GET","params":{"0":"/login"},"service":"user-service","timestamp":"9/10/2023, 6:35:36 PM","url":"/login"}
+{"body":{"email":"fambroderon@gmail.com","password":"fambro123"},"level":"info","method":"POST","params":{"0":"/login"},"service":"user-service","timestamp":"9/10/2023, 6:35:46 PM","url":"/login"}
+{"body":{},"level":"info","method":"GET","params":{"0":"/userhome"},"service":"user-service","timestamp":"9/10/2023, 6:35:47 PM","url":"/userhome"}
+{"body":{},"level":"info","method":"GET","params":{"0":"/userhome"},"service":"user-service","timestamp":"9/10/2023, 6:35:53 PM","url":"/userhome"}
+{"body":{},"level":"info","method":"GET","params":{"0":"/userhome"},"service":"user-service","timestamp":"9/10/2023, 6:36:00 PM","url":"/userhome"}
+{"body":{},"level":"info","method":"GET","params":{"0":"/userhome"},"service":"user-service","timestamp":"9/10/2023, 6:36:59 PM","url":"/userhome"}
