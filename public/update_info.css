@@ -1,5 +1,5 @@
 body {
-    background-color: beige;
+    background-color: #E2C799;
     margin: 0; /* Remove default margin to fill the entire viewport */
   }
   
@@ -29,7 +29,7 @@ body {
     flex-direction: column; /* Stack items vertically */
     align-items: flex-start; /* Align items at the top of the container */
     background-color: white;
-    height: 1000px;
+    height: 700px;
     width: 500px;
   }
   
