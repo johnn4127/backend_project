@@ -319,7 +319,7 @@ try{
   const user = await Accounts.findOne({ where: { email } });
 
     if (!user) {
-      return res.send('User not found');
+      return res.status(400).render('forgot_password',{errorMessage:'Email already registered'});      //.json('User not found');
     }
 
     //creates a one time link for the user
@@ -346,12 +346,12 @@ await sgMail.send(message).then(() => {
   console.log('Email Sent')
   res.send(`password reset link has been sent to your email`)
 }).catch((err) => {
-  console.error(err.message);
-  res.send(err.message);
+  console.error(err);
+  return res.status(400).render('forgot_password',{errorMessage:'Error sending link'});
 });
 } catch (err) {
 console.error(err.message);
-res.send(err.message);
+res.status(400).render('forgot_password',{errorMessage:'Error sending link'});
 }
 });
 
@@ -365,7 +365,7 @@ try{
   const user=await Accounts.findOne({ where: { id } })
   //this checks if the id is in the database
 if(!user){
-  res.send(`invalid id`)
+  res.status(400).render('reset-password',{errorMessage:'Invalid ID'});
   return
 }
 const secret=JWT_SECRET + user.password
@@ -375,8 +375,7 @@ payload=jwt.verify(token, secret)
 console.log('payload',payload)
 res.render('reset-password',{email: user.email})
 }catch(err){
-  console.log(token)
-  res.send('an error occured during password reset')
+  res.status(400).render('reset-password',{errorMessage:'An error occured during password reset'});
 }
 })
 
@@ -388,12 +387,13 @@ app.post('/reset-password/:id/:token',async(req,res,next)=>{
     const userId = parseInt(id, 10);
     
     if (isNaN(userId)) {
-      return res.send('Invalid user ID');
+      return res.status(400).render('reset-password',{errorMessage:'Invalid user ID'});
+    
     }
     const user = await Accounts.findOne({ where: { id: userId } });  //remove iser id if err
     
     if(!user){
-      return res.send(`invalid id`)
+      return res.status(400).render('reset-password',{errorMessage:'Invalid user'});
     }
     
     const secret=JWT_SECRET + user.password
@@ -401,8 +401,13 @@ app.post('/reset-password/:id/:token',async(req,res,next)=>{
 
   if (password.trim() !== repassword.trim()) {
     console.log('Passwords do not match');
-    return res.send('Passwords do not match');
+    return res.status(400).render('reset-password',{errorMessage:'Passwords do not match'});
+    
   }
+  if (urlRegex.test(password,repassword)) {
+    return res.status(400).render('reset-password',{errorMessage:'Password should not contain a URL'})
+  };
+  
   const saltRounds = 10;
   const hashedNewPassword = await bcrypt.hash(password, saltRounds);
   // Update the user's password in the database
@@ -412,28 +417,23 @@ app.post('/reset-password/:id/:token',async(req,res,next)=>{
   const updatedUser = await Accounts.findOne({ where: { id: userId } });
   if (updatedUser && updatedUser.password !== hashedNewPassword) {
     console.log('Password update failed in the database');
-    return res.send('Password update failed');
+    return res.status(400).render('reset-password',{errorMessage:'Password update failed'});
   }
 
-  res.send('Password reset successful');
+  res.render('Password reset successful');
 } catch (err) {
   console.error(err);
-  res.send('Password reset failed');
+  res.status(400).render('reset-password',{errorMessage:'Password reset failed'});
 }
 });
 
-
-
-
-
-
-
-app.listen(3000, () =>{
-    console.log(`Server is running on port 3000`)
-})
 
 app.get('/books', async(req,res) => {
   const allBooks = await Books.findAll()
   
   res.render("books", {allBooks:allBooks})
+})
+
+app.listen(3000, () =>{
+    console.log(`Server is running on port 3000`)
 })
