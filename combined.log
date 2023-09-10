@@ -3607,3 +3607,16 @@
 {"body":{"email":"david@le.com","password":"11111111"},"level":"info","method":"POST","params":{"0":"/login"},"service":"user-service","timestamp":"9/9/2023, 7:35:09 PM","url":"/login"}
 {"body":{},"level":"info","method":"GET","params":{"0":"/userhome"},"service":"user-service","timestamp":"9/9/2023, 7:35:09 PM","url":"/userhome"}
 {"body":{},"level":"info","method":"GET","params":{"0":"/account"},"service":"user-service","timestamp":"9/9/2023, 7:35:14 PM","url":"/account"}
+{"body":{},"level":"info","method":"GET","params":{"0":"/"},"service":"user-service","timestamp":"9/9/2023, 7:47:49 PM","url":"/"}
+{"body":{},"level":"info","method":"GET","params":{"0":"/"},"service":"user-service","timestamp":"9/9/2023, 7:47:50 PM","url":"/"}
+{"body":{},"level":"info","method":"GET","params":{"0":"/login"},"service":"user-service","timestamp":"9/9/2023, 7:47:51 PM","url":"/login"}
+{"body":{},"level":"info","method":"GET","params":{"0":"/forgot_password"},"service":"user-service","timestamp":"9/9/2023, 7:57:11 PM","url":"/forgot_password"}
+{"body":{},"level":"info","method":"GET","params":{"0":"/"},"service":"user-service","timestamp":"9/9/2023, 7:57:52 PM","url":"/"}
+{"body":{},"level":"info","method":"GET","params":{"0":"/login"},"service":"user-service","timestamp":"9/9/2023, 8:00:13 PM","url":"/login"}
+{"body":{},"level":"info","method":"GET","params":{"0":"/login"},"service":"user-service","timestamp":"9/9/2023, 8:00:16 PM","url":"/login"}
+{"body":{},"level":"info","method":"GET","params":{"0":"/accountinfo"},"service":"user-service","timestamp":"9/9/2023, 8:01:28 PM","url":"/accountinfo"}
+{"body":{},"level":"info","method":"GET","params":{"0":"/"},"service":"user-service","timestamp":"9/9/2023, 8:03:48 PM","url":"/"}
+{"body":{},"level":"info","method":"GET","params":{"0":"/login"},"service":"user-service","timestamp":"9/9/2023, 8:03:50 PM","url":"/login"}
+{"body":{},"level":"info","method":"GET","params":{"0":"/"},"service":"user-service","timestamp":"9/9/2023, 8:03:52 PM","url":"/"}
+{"body":{},"level":"info","method":"GET","params":{"0":"/registration"},"service":"user-service","timestamp":"9/9/2023, 8:03:53 PM","url":"/registration"}
+{"body":{},"level":"info","method":"GET","params":{"0":"/accountinfo"},"service":"user-service","timestamp":"9/9/2023, 8:11:16 PM","url":"/accountinfo"}
