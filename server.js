@@ -1,4 +1,5 @@
-const express = require('express')
+const express = require('express');
+const session = require('express-session');
 const bodyParser = require('body-parser');
 const app = express();
 const winston = require("winston");
@@ -10,7 +11,8 @@ const {user}=require('./models')
 const API_KEY= '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'                                   //'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'
 sgMail.setApiKey(API_KEY)
 app.use(express.json())
-//link ejs/css
+app.use(bodyParser.urlencoded({ extended: false }))
+
 app.use(express.static(__dirname + '/public'));
 const path = require('path');
 const db = "postgres://oniifgkp:VEr8-v22_Ty-JC7eNMdfoTFRPD8YcjLc@berry.db.elephantsql.com/oniifgkp";
@@ -18,7 +20,6 @@ const { Sequelize, DataTypes } = require("sequelize");
 const sequelize = new Sequelize(db) //is this the same thing as line 164
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: false }))
-app.use(bodyParser.json());
 
 const logger = winston.createLogger({
     level: 'info',
@@ -58,16 +59,23 @@ app.all('*', (req, res, next) => {
       next();
   })
 
-  app.get('/home', (req, res) => {
+  app.get('/', (req, res) => {
     const userName = req.query.name; 
     res.render('home', { userName });
     
   });
 
   app.get('/userhome', async (req, res) => {
-    const { email } = req.query;
-    res.render('userhome', { email: email})
+    if (req.session.user) {
+      // User is authenticated, you can access user data like req.session.user
+      const user = req.session.user;
+      res.render('userhome', { user });
+    } else {
+      // User is not authenticated, handle it accordingly (e.g., redirect to login)
+      res.redirect('/login');
+    }
   });
+  
 
 
   
@@ -81,10 +89,37 @@ app.get('/account',(req,res) => {
     res.render('myAccount')
 })
 
-app.get('/update',(req,res) => {
-    res.render('update_info')
+
+const Account = require('./models/accounts'); // Import your model
+
+
+app.get('/accountinfo', async (req, res) => {
+  try {
+    const accounts = await Accounts.findAll();
+
     
-})
+    res.render('account_info', { accounts });
+  } catch (error) {
+    console.error('Error fetching account info:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+
+app.get('/update', async (req, res) => {
+  try {
+      // Retrieve user information from the session
+      const user = req.session.user;
+
+      // Render the EJS template with the user data
+      res.render('update_info', { user });
+  } catch (error) {
+      console.error('Error fetching user info:', error);
+      res.status(500).send('Internal Server Error');
+  }
+});
+
+
 
 
 
@@ -97,11 +132,12 @@ app.get('/account',(req,res) => {
 })
 
 app.get('/update',(req,res) => {
+    
     res.render('update_info')
     
 })
 
-// Assuming you're using Express
+
 app.get('/delete', (req, res) => {
     res.render('delete_info'); // Render the delete_account.ejs template
   });
@@ -173,7 +209,18 @@ app.post('/registration', async(req,res) => {
 }
 })
 
+app.get('/update_info', async (req, res) => {
+    if (req.session.user) {
+      const user = req.session.user; // Retrieve user data from the session
+      res.render('update_info', { user });
+    } else {
+      res.redirect('/login'); // Redirect to the login page if not authenticated
+    }
+});
 
+
+
+  
 app.delete('/delete', async(req,res) =>{
     await Books.destroy({
         where:{book_name:"test"}
@@ -188,38 +235,60 @@ app.get('/login',(req,res) =>{
 
 app.post('/login', async (req, res) => {
     const { email, password } = req.body;
-
+  
     try {
-        // Assuming you have a Sequelize model named Accounts
-        const user = await Accounts.findOne({ where: { email } });
-
-        if (!user) {
-            // Handle the case where the user doesn't exist
-            return res.render('login_fail', { error: 'Account not found' }); // Pass the error message
-        }
-
-        // Check if the provided password matches the user's password (you should have password hashing logic)
-        // For example, you can use bcrypt to compare the hashed password
-        const passwordMatch = await bcrypt.compare(password, user.password);
-
-        if (!passwordMatch) {
-            // Handle incorrect password
-            return res.render('login_fail', { error: 'Incorrect password' }); // Pass the error message
-        }
-
-        // Redirect to userhome with the email as a query parameter
-        return res.redirect('/userhome?email=' + encodeURIComponent(email));
+      // Assuming you have a Sequelize model named Accounts
+      const user = await Accounts.findOne({ where: { email } });
+  
+      if (!user) {
+        // Handle the case where the user doesn't exist
+        return res.render('login_fail', { error: 'Account not found' });
+      }
+  
+      // Check if the provided password matches the user's password
+      const passwordMatch = await bcrypt.compare(password, user.password);
+  
+      if (!passwordMatch) {
+        // Handle incorrect password
+        return res.render('login_fail', { error: 'Incorrect password' });
+      }
+  
+      // Store user data in the session upon successful login
+      req.session.user = user;
+  
+      // Redirect to userhome with the email as a query parameter
+      return res.redirect('/userhome');
     } catch (error) {
-        // Handle any database errors or other errors
-        console.error('Error during login:', error);
-        return res.status(500).send('Internal Server Error');
+      console.error('Error during login:', error);
+      return res.status(500).send('Internal Server Error');
     }
-});
-
-
+  });
   
+  app.post("/update", async (req, res) => {
+    const { newFirstName, newLastName, newEmail } = req.body;
+    const userId = req.session.user.id; 
   
-
+    try {
+      
+      const user = await Accounts.findByPk(userId);
+  
+      if (!user) {
+        return res.status(404).json({ error: "User not found" });
+      }
+  
+      // Update user information in the database
+      user.firstName = newFirstName;
+      user.lastName = newLastName;
+      user.email = newEmail;
+      await user.save();
+  
+      return res.json({ success: true });
+    } catch (error) {
+      console.error("Error updating user information:", error);
+      return res.status(500).json({ error: "Internal Server Error" });
+    }
+  });
+  
 
 
 // const JWT_SECRET='7h3m0s7r6nd0ms7ringyou3vers6w'
@@ -272,7 +341,7 @@ const message = {
 await sgMail.send(message)
 .then(() => {
   console.log('Email Sent')
-  res.send(`Password reset link has been sent to your email.`)
+  res.send(`Password reset link has been sent to your email`)
 })
 .catch((err) => {
   console.error(err);
@@ -287,14 +356,6 @@ res.send(err);
 
 
 
-
-
-
-
-
-
-
-
 //this is the rounte the link above takes the user to
 app.get('/reset-password/:id/:token', async(req,res,next)=>{
 const {id,token}=req.params
@@ -302,7 +363,7 @@ try{
   const user=await Accounts.findOne({ where: { id } })
   //this checks if the id is in the database
 if(!user){
-  res.send(`Invalid Id`)
+  res.send(`invalid id`)
   return
 }
 const secret=JWT_SECRET + user.password
@@ -313,7 +374,7 @@ console.log('payload',payload)
 res.render('reset-password',{email: user.email})
 }catch(err){
   console.log(token)
-  res.send('An error occured during password reset')
+  res.send('an error occured during password reset')
 }
 })
 
@@ -330,7 +391,7 @@ app.post('/reset-password/:id/:token',async(req,res,next)=>{
     const user = await Accounts.findOne({ where: { id: userId } });  //remove iser id if err
     
     if(!user){
-      return res.send(`Invalid Id`)
+      return res.send(`invalid id`)
     }
     
     const secret=JWT_SECRET + user.password
@@ -358,34 +419,10 @@ app.post('/reset-password/:id/:token',async(req,res,next)=>{
   res.send('Password reset failed');
 }
 });
-  
-
-//   try{
-//     const payload=jwt.verify(token, secret)
-//     user.password=password
-//     res.send(user)
-//   }catch(err){
-//     console.log(err.message)
-//     res.send(err.message)
-//   }
-// })
 
 
-// const sgMail=require('@sendgrid/mail')
-// const API_KEY='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'
-// sgMail.setApiKey(API_KEY)
 
-// const message={
-//     to: 'deronfambro0112@gmail.com',
-//     from: 'snugglereads@gmail.com',
-//     subject: 'hello from snugglereads',
-//     text: 'hello from sendgrid',
-//     html: '<h1>Hello from Snugglereads</h1>'
-//   }
-//   sgMail
-//   .send(message)
-//   .then(res=>console.log('email sent'))
-//   .catch(error=>console.log(error.message))
+
 
 
 app.listen(3000, () =>{
@@ -397,3 +434,8 @@ app.get('/books', async(req,res) => {
   
   res.render("books", {allBooks:allBooks})
 })
+
+
+// app.listen(3000, () =>{
+//     console.log(`Server is running on port 3000`)
+// })
