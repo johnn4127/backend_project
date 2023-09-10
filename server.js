@@ -1,4 +1,5 @@
-const express = require('express')
+const express = require('express');
+const session = require('express-session');
 const bodyParser = require('body-parser');
 const app = express();
 const winston = require("winston");
@@ -10,7 +11,8 @@ const {user}=require('./models')
 const API_KEY= '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'                                   //'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'
 sgMail.setApiKey(API_KEY)
 app.use(express.json())
-//link ejs/css
+app.use(bodyParser.urlencoded({ extended: false }))
+
 app.use(express.static(__dirname + '/public'));
 const path = require('path');
 const db = "postgres://oniifgkp:VEr8-v22_Ty-JC7eNMdfoTFRPD8YcjLc@berry.db.elephantsql.com/oniifgkp";
@@ -58,16 +60,23 @@ app.all('*', (req, res, next) => {
       next();
   })
 
-  app.get('/home', (req, res) => {
+  app.get('/', (req, res) => {
     const userName = req.query.name; 
     res.render('home', { userName });
     
   });
 
   app.get('/userhome', async (req, res) => {
-    const { email } = req.query;
-    res.render('userhome', { email: email})
+    if (req.session.user) {
+      // User is authenticated, you can access user data like req.session.user
+      const user = req.session.user;
+      res.render('userhome', { user });
+    } else {
+      // User is not authenticated, handle it accordingly (e.g., redirect to login)
+      res.redirect('/login');
+    }
   });
+  
 
 
   
@@ -81,8 +90,14 @@ app.get('/account',(req,res) => {
     res.render('myAccount')
 })
 
-app.get('/update',(req,res) => {
-    res.render('update_info')
+
+const Account = require('./models/accounts'); // Import your model
+
+
+app.get('/accountinfo', async (req, res) => {
+  try {
+    const accounts = await Accounts.findAll();
+
     
 })
 
@@ -97,11 +112,12 @@ app.get('/account',(req,res) => {
 })
 
 app.get('/update',(req,res) => {
+    
     res.render('update_info')
     
 })
 
-// Assuming you're using Express
+
 app.get('/delete', (req, res) => {
     res.render('delete_info'); // Render the delete_account.ejs template
   });
@@ -173,7 +189,18 @@ app.post('/registration', async(req,res) => {
 }
 })
 
+app.get('/update_info', async (req, res) => {
+    if (req.session.user) {
+      const user = req.session.user; // Retrieve user data from the session
+      res.render('update_info', { user });
+    } else {
+      res.redirect('/login'); // Redirect to the login page if not authenticated
+    }
+});
 
+
+
+  
 app.delete('/delete', async(req,res) =>{
     await Books.destroy({
         where:{book_name:"test"}
@@ -188,41 +215,90 @@ app.get('/login',(req,res) =>{
 
 app.post('/login', async (req, res) => {
     const { email, password } = req.body;
-
+  
     try {
-        // Assuming you have a Sequelize model named Accounts
-        const user = await Accounts.findOne({ where: { email } });
-
-        if (!user) {
-            // Handle the case where the user doesn't exist
-            return res.render('login_fail', { error: 'Account not found' }); // Pass the error message
-        }
-
-        // Check if the provided password matches the user's password (you should have password hashing logic)
-        // For example, you can use bcrypt to compare the hashed password
-        const passwordMatch = await bcrypt.compare(password, user.password);
-
-        if (!passwordMatch) {
-            // Handle incorrect password
-            return res.render('login_fail', { error: 'Incorrect password' }); // Pass the error message
-        }
-
-        // Redirect to userhome with the email as a query parameter
-        return res.redirect('/userhome?email=' + encodeURIComponent(email));
+      // Assuming you have a Sequelize model named Accounts
+      const user = await Accounts.findOne({ where: { email } });
+  
+      if (!user) {
+        // Handle the case where the user doesn't exist
+        return res.render('login_fail', { error: 'Account not found' });
+      }
+  
+      // Check if the provided password matches the user's password
+      const passwordMatch = await bcrypt.compare(password, user.password);
+  
+      if (!passwordMatch) {
+        // Handle incorrect password
+        return res.render('login_fail', { error: 'Incorrect password' });
+      }
+  
+      // Store user data in the session upon successful login
+      req.session.user = user;
+  
+      // Redirect to userhome with the email as a query parameter
+      return res.redirect('/userhome');
     } catch (error) {
-        // Handle any database errors or other errors
-        console.error('Error during login:', error);
-        return res.status(500).send('Internal Server Error');
+      console.error('Error during login:', error);
+      return res.status(500).send('Internal Server Error');
     }
-});
+  });
+  
+  app.post("/update", async (req, res) => {
+    const { newFirstName, newLastName, newEmail } = req.body;
+    const userId = req.session.user.id; 
+  
+    try {
+      
+      const user = await Accounts.findByPk(userId);
+  
+      if (!user) {
+        return res.status(404).json({ error: "User not found" });
+      }
+  
+      // Update user information in the database
+      user.firstName = newFirstName;
+      user.lastName = newLastName;
+      user.email = newEmail;
+      await user.save();
+  
+      return res.json({ success: true });
+    } catch (error) {
+      console.error("Error updating user information:", error);
+      return res.status(500).json({ error: "Internal Server Error" });
+    }
+  });
+  
 
 
+
+
+
+app.post('/delete_account', async (req, res) => {
+    const { email } = req.body;
+  
+    try {
+      // Assuming you have a Sequelize model named User
+      const user = await Accounts.findOne({ where: { email } });
+  
+      if (!user) {
+        // Handle the case where the user doesn't exist
+        return res.status(404).send('User not found');
+      }
+  
+      // Delete the user
+      await user.destroy();
+  
+      // Redirect to a confirmation page
+      return res.redirect('/home'); // Redirect to a confirmation page
+    } catch (error) {
+      // Handle any database errors with a more user-friendly message
+      console.error('Error deleting user:', error);
+      return res.status(500).send('An error occurred while deleting the account. Please try again later.');
+    }
+  });
   
   
-
-
-
-// const JWT_SECRET='7h3m0s7r6nd0ms7ringyou3vers6w'
 const JWT_SECRET='some super secret...'
 // const message={
 //   to: 'deronfambro0112@gmail.com',
@@ -232,7 +308,6 @@ const JWT_SECRET='some super secret...'
 //   html: '<h1>Hello from Snugglereads</h1>'
 // }
 // sgMail.send(message).then(res=>console.log('email sent')).catch(err=>console.log(err.message))
-
 
 
 app.get('/forgot_password',(req,res,next) =>{
@@ -260,38 +335,9 @@ try{
 //creating the token and making it expire in 1 day
 const token=jwt.sign(payload,secret,{expiresIn: '1d'})
 const link=`http://localhost:3000/reset-password/${user.id}/${token}` //where the user goes when they click the link
-// console.log(link) //send emails here
-const message = {
-  to: user.email,
-  from: 'snugglereads@gmail.com',
-  subject: 'Password Reset',
-  text: 'Click the link to reset your password: ' + link,
-  html: `<p>Click the link to reset your password:</p><a href="${link}">${link}</a>`,
-};
-
-await sgMail.send(message)
-.then(() => {
-  console.log('Email Sent')
-  res.send(`password reset link has been sent to your email`)
+console.log(link) //send emails here
+res.send(`password reset link has been sent to your email`)
 })
-.catch((err) => {
-  console.error(err);
-  res.send(err);
-});
-} catch (err) 
-{
-console.error(err);
-res.send(err);
-}
-});
-
-
-
-
-
-
-
-
 
 
 
@@ -316,7 +362,6 @@ res.render('reset-password',{email: user.email})
   res.send('an error occured during password reset')
 }
 })
-
 
 app.post('/reset-password/:id/:token',async(req,res,next)=>{
   const {id,token}=req.params
@@ -358,34 +403,11 @@ app.post('/reset-password/:id/:token',async(req,res,next)=>{
   res.send('Password reset failed');
 }
 });
-  
-
-//   try{
-//     const payload=jwt.verify(token, secret)
-//     user.password=password
-//     res.send(user)
-//   }catch(err){
-//     console.log(err.message)
-//     res.send(err.message)
-//   }
-// })
 
 
-// const sgMail=require('@sendgrid/mail')
-// const API_KEY='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'
-// sgMail.setApiKey(API_KEY)
 
-// const message={
-//     to: 'deronfambro0112@gmail.com',
-//     from: 'snugglereads@gmail.com',
-//     subject: 'hello from snugglereads',
-//     text: 'hello from sendgrid',
-//     html: '<h1>Hello from Snugglereads</h1>'
-//   }
-//   sgMail
-//   .send(message)
-//   .then(res=>console.log('email sent'))
-//   .catch(error=>console.log(error.message))
+
+
 
 
 app.listen(3000, () =>{
@@ -396,4 +418,9 @@ app.get('/books', async(req,res) => {
   const allBooks = await Books.findAll()
   
   res.render("books", {allBooks:allBooks})
+})
+
+
+app.listen(3000, () =>{
+    console.log(`Server is running on port 3000`)
 })
