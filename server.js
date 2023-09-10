@@ -264,15 +264,15 @@ const link=`http://localhost:3000/reset-password/${user.id}/${token}` //where th
 const message = {
   to: user.email,
   from: 'snugglereads@gmail.com',
-  subject: 'Password Reset',
-  text: 'Click the link to reset your password: ' + link,
+  subject: 'Snuggle Reads Password Reset Link',
+  text: 'Click the link to reset the password to your snuggle reads account: ' + link,
   html: `<p>Click the link to reset your password:</p><a href="${link}">${link}</a>`,
 };
 
 await sgMail.send(message)
 .then(() => {
   console.log('Email Sent')
-  res.send(`password reset link has been sent to your email`)
+  res.send(`Password reset link has been sent to your email.`)
 })
 .catch((err) => {
   console.error(err);
@@ -302,7 +302,7 @@ try{
   const user=await Accounts.findOne({ where: { id } })
   //this checks if the id is in the database
 if(!user){
-  res.send(`invalid id`)
+  res.send(`Invalid Id`)
   return
 }
 const secret=JWT_SECRET + user.password
@@ -313,7 +313,7 @@ console.log('payload',payload)
 res.render('reset-password',{email: user.email})
 }catch(err){
   console.log(token)
-  res.send('an error occured during password reset')
+  res.send('An error occured during password reset')
 }
 })
 
@@ -330,7 +330,7 @@ app.post('/reset-password/:id/:token',async(req,res,next)=>{
     const user = await Accounts.findOne({ where: { id: userId } });  //remove iser id if err
     
     if(!user){
-      return res.send(`invalid id`)
+      return res.send(`Invalid Id`)
     }
     
     const secret=JWT_SECRET + user.password
