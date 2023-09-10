@@ -7,7 +7,7 @@ const {Accounts,Books,Histories} = require('./models')
 const jwt=require('jsonwebtoken')
 const sgMail=require('@sendgrid/mail')
 const {user}=require('./models')
-const API_KEY= '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'                                   //'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'
+const API_KEY= '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'                                   //'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'
 sgMail.setApiKey(API_KEY)
 app.use(express.json())
 //link ejs/css
