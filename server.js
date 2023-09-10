@@ -95,10 +95,8 @@ const Account = require('./models/accounts'); // Import your model
 
 
 app.get('/accountinfo', async (req, res) => {
-  try {
-    const accounts = await Accounts.findAll();
 
-    
+    const accounts = await Accounts.findAll();    
 })
 
 
@@ -336,8 +334,27 @@ try{
 const token=jwt.sign(payload,secret,{expiresIn: '1d'})
 const link=`http://localhost:3000/reset-password/${user.id}/${token}` //where the user goes when they click the link
 console.log(link) //send emails here
-res.send(`password reset link has been sent to your email`)
-})
+const message = {
+  to: user.email,
+  from: 'snugglereads@gmail.com',
+  subject: 'Password Reset',
+  text: 'Click the link to reset your password: ' + link,
+  html: `<p>Click the link to reset your password:</p><a href="${link}">${link}</a>`,
+};
+
+await sgMail.send(message).then(() => {
+  console.log('Email Sent')
+  res.send(`password reset link has been sent to your email`)
+}).catch((err) => {
+  console.error(err.message);
+  res.send(err.message);
+});
+} catch (err) {
+console.error(err.message);
+res.send(err.message);
+}
+});
+
 
 
 
