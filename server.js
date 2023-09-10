@@ -383,6 +383,7 @@ res.render('reset-password',{email: user.email})
 app.post('/reset-password/:id/:token',async(req,res,next)=>{
   const {id,token}=req.params
   const {password,repassword}=req.body
+  
   try {
     const userId = parseInt(id, 10);
     
@@ -435,9 +436,4 @@ app.get('/books', async(req,res) => {
   const allBooks = await Books.findAll()
   
   res.render("books", {allBooks:allBooks})
-})
-
-
-app.listen(3000, () =>{
-    console.log(`Server is running on port 3000`)
 })
