@@ -26,7 +26,7 @@ app.use(session({
     cookie: {
       maxAge: 3600000, // Session will expire after 1 hour (adjust as needed)
     },
-  }));
+  })); 
 
 const logger = winston.createLogger({
     level: 'info',
