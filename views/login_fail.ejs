@@ -24,14 +24,57 @@
                         <div class="password">
                             Password <input type="password" minlength="8" maxlength="25" name="password" value="" /><br><br>
                         </div>
-                        <button onclick="">Sign in</button>
+                        <style>
+                            /* Style the button */
+                            #updateButton {
+                              background-color: #9A3B3B; 
+                              font-family: 'Courier New', Courier, monospace;
+                              font-size: large;
+                              color: white; 
+                              padding: 10px 20px; 
+                              border: none; 
+                              cursor: pointer; 
+                              border-radius: 10px;
+                            }
+                          
+                            /* Style the button on hover */
+                            #updateButton:hover {
+                              background-color: #C08261;
+                            }
+                          </style>
+                          
+                          <button id="updateButton" onclick="signIn()">Sign in</button><br><br>
 
                         <div class="line"></div>
 
-                        <p class="account">Need to create an account?. <a href="./registration">Register</a></p>
+                        <p class="account">Need to create an account?.</p>
+                        <style>
+                            /* Style the button */
+                            #updateButton {
+                              background-color: #9A3B3B; 
+                              font-family: 'Courier New', Courier, monospace;
+                              font-size: large;
+                              color: white; 
+                              padding: 10px 20px; 
+                              border: none; 
+                              cursor: pointer; 
+                              border-radius: 10px;
+                              text-decoration: none; /* Remove default underline for links */
+                              display: inline-block; /* Make it a block-level element to set width and height */
+                              text-align: center; /* Center the text horizontally */
+                              line-height: 2.5; /* Center the text vertically */
+                            }
+                          
+                            /* Style the button on hover */
+                            #updateButton:hover {
+                              background-color: #C08261;
+                            }
+                          </style>
+                          
+                          <a id="updateButton" href="./registration">Register</a>
                     </div>
 
-                    <a href="/home">Back to Home</a>
+                    <a href="/">Back to Home</a>
                 </form>
             </div>
         </div>
