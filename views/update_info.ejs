@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Snuggle Reads</title>
     <link href="update_info.css" rel="stylesheet">
+    
+
 </head>
 <body>
     <h1 id="header">SnuggleReads</h1>
@@ -47,8 +49,37 @@
               
                 <input type="submit" id="updateButton" value="Update Your Information" /><br><br>
               </form>
-              
+
               <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                  // Retrieve user data from cookies
+                  const firstName = getCookie("userFirstName");
+                  const lastName = getCookie("userLastName");
+                  const email = getCookie("userEmail");
+              
+                  // Populate form fields with user data from cookies
+                  const yourNameInput = document.getElementById("yourName");
+                  const yourLastNameInput = document.getElementById("yourLastName");
+                  const yourEmailInput = document.getElementById("yourEmail");
+              
+                  yourNameInput.value = firstName || "";
+                  yourLastNameInput.value = lastName || "";
+                  yourEmailInput.value = email || "";
+              
+                  // Update cookies when input changes
+                  yourNameInput.addEventListener("input", function () {
+                    setCookie("userFirstName", yourNameInput.value, 365);
+                  });
+              
+                  yourLastNameInput.addEventListener("input", function () {
+                    setCookie("userLastName", yourLastNameInput.value, 365);
+                  });
+              
+                  yourEmailInput.addEventListener("input", function () {
+                    setCookie("userEmail", yourEmailInput.value, 365);
+                  });
+                });
+              
                 document.getElementById("updateForm").addEventListener("submit", function (e) {
                   e.preventDefault(); // Prevent the default form submission
               
@@ -77,20 +108,23 @@
                     });
                 });
               </script>
-              
-              <a href="/delete" style="color: red; font-size: smaller; font-family: 'Courier New', Courier, monospace;">Delete Account</a>
-              <a href="/account" style="font-size: smaller; font-family: 'Courier New', Courier, monospace;">Back to My Account</a>
-              <a href="/userhome" style="font-size: smaller; font-family: 'Courier New', Courier, monospace;">Back to Home</a>
-              </div>
-              
-        </div>
-        <div class="bigphoto">
-            <div class="bookshelf">
-                <img src="https://images.unsplash.com/photo-1595123550384-b81222e23cf9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3387&q=80"
-                    alt="" class="bookshelf">
-            </div>
-            
-        </div>
-    </div>
+             
+             <a href="/delete" style="color: red; font-size: smaller; font-family: 'Courier New', Courier, monospace;">Delete Account</a>
+             <a href="/account" style="font-size: smaller; font-family: 'Courier New', Courier, monospace;">Back to My Account</a>
+             <a href="/userhome" style="font-size: smaller; font-family: 'Courier New', Courier, monospace;">Back to Home</a>
+             </div>
+             
+       </div>
+       <div class="bigphoto">
+           <div class="bookshelf">
+               <img src="https://images.unsplash.com/photo-1595123550384-b81222e23cf9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3387&q=80"
+                   alt="" class="bookshelf">
+           </div>
+           
+       </div>
+   </div>
+   <script src="/clientCookie.js"></script>
 </body>
 </html>
+              
+              

@@ -39,11 +39,42 @@
             
             <!-- Your link styled as a button -->
             <a href="/update" class="update-button">Update Information</a>
+            <a href="/bookhistory" class="update-button">My Book History</a>
             
 
 
               
-              <p>Book History:</p>
+              
+
+
+              <script>
+                // Assuming you have a way to get the current user's ID, e.g., from a session or authentication token
+                const currentUserId = 50; // Replace with the actual user's ID
+              
+                document.getElementById('retrieveBooksBtn').addEventListener('click', () => {
+                  // Send a request to retrieve the user's book history
+                  fetch(`/getUserBooks/${currentUserId}`)
+                    .then((response) => response.json())
+                    .then((data) => {
+                      // Handle the retrieved book data, e.g., render it in the UI
+                      const bookHistoryContainer = document.getElementById('bookHistory');
+              
+                      // Clear any previous book history
+                      bookHistoryContainer.innerHTML = '';
+              
+                      // Render the books in the book history container
+                      data.forEach((book) => {
+                        const bookItem = document.createElement('li');
+                        bookItem.textContent = book.bookName;
+                        bookHistoryContainer.appendChild(bookItem);
+                      });
+                    })
+                    .catch((error) => {
+                      console.error('Error retrieving book history:', error);
+                    });
+                });
+              </script>
+
 
                 
                 <div class ="book-container">
