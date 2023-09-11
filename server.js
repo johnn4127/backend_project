@@ -63,6 +63,14 @@ app.all('*', (req, res, next) => {
       });
       next();
   })
+  app.use(session({
+    secret: '12345', // Change this to a strong secret key
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      maxAge: 3600000, // Session will expire after 1 hour (adjust as needed)
+    },
+  }));
 
   app.get('/', (req, res) => {
     const userName = req.query.name; 
@@ -333,15 +341,11 @@ app.post('/login', async (req, res) => {
   });
   
       
-  let user={
-    id: "2",
-    email: "theman@gmail.com" ,
-    password: "lilbro"
-  }
+
   app.post('/delete_account', async (req, res) => {
       const { email } = req.body;
   
-  
+  })
      
   
   
@@ -387,7 +391,7 @@ const JWT_SECRET='some super secret...'
 
 
 app.get('/forgot_password',(req,res,next) =>{
-  res.render("forgot_password")
+  res.render("forgot_password",{errorMessage:'Error loading page'})
 })
 
 app.post('/forgot_password',async(req,res,next)=>{
@@ -451,7 +455,7 @@ console.log('token:',token)
 console.log('secret:',secret)
 payload=jwt.verify(token, secret)
 console.log('payload',payload)
-res.render('reset-password',{email: user.email})
+res.status(500).render('reset-password',{email: user.email})
 }catch(err){
   res.status(400).render('reset-password',{errorMessage:'An error occured during password reset'});
 }
