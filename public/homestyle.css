@@ -3,7 +3,7 @@
     padding: 20px;
     border: 1px solid #ddd;
   }
- 
+
 
 
 #top-container{
@@ -29,30 +29,94 @@
 
  .homelargeimagelandscape {
   width: 800px;
-  height: 400px;
+  height: 450px;
   object-fit: cover;
   border-radius: 20px;
   
  }
 
 .homelargeimageportrait {
- height: 550px;
+ height: 400px;
+ width: 450px;
  object-fit: cover;
+ object-position: center top;
  border-radius: 20px;
+}
+.homelargeimageportrait2 {
+ height: 400px;
+ width: 450px;
+ object-fit: cover;
+ object-position: 50% 20%;
+ border-radius: 20px;
+}
+.stepcontainer{
+  display: flex;
+  flex-direction: column;
+  justify-content: center; 
+  /* align-items: center; */
+  width: 50vw;
+
+}
+.stepcontainer2{
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center;  */
+  /* align-items: center; */
+  float: left;
 
 }
 
+.steptitle{
+  display: flex;
+  flex-direction: column;
+  justify-content: right; 
+  font-size: 25px;
+}
+
+
+.booktitle{
+  display: flex;
+  flex-direction: column;
+  justify-content: right; 
+  font-size: 25px;
+
+}
+
+.description{
+  display: flex;
+  flex-direction: column;
+  justify-content: right; 
+  font-size: 25px;
+
+
+}
+#SNUGGLEBUDS{
+  text-decoration: none;
+  color: black;
+  font-weight: 600;
+}
  .largeimagecontainerwhite {
   display: flex;
   justify-content: center;
   background-color: white;
-  padding: 150px;
+  padding: 20px 150px;
+  /* height: 400px;
+  width: 500px;
+  object-fit: cover; */
+ }
+
+ .largeimagecontainerwhite2 {
+  display: flex;
+  justify-content: center;
+  background-color: white;
+  padding: 20px 150px 20px 40px;
+  /* height: 400px */
  }
 
  .largeimagecontainer {
   display: flex;
   justify-content: center;
-  padding: 150px;
+  padding: 20px;
  }
 
  .header-title{
@@ -86,6 +150,18 @@
  background-size: cover;
  height:100vh
 }
+
+#cont6{
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.container6{
+  display: flex;
+
+
+
+}
 .hr-tag {
   height: 20px;
   background-color: black;
@@ -98,6 +174,10 @@ display: flex;
 justify-content: center;
 background-color: cornflowerblue;
 font-size: larger;
+font-family: 'Courier New', Courier, monospace;
+
+
+
  }
 
  .navbar2{
