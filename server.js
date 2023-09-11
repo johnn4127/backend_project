@@ -420,7 +420,7 @@ app.post('/reset-password/:id/:token',async(req,res,next)=>{
     return res.status(400).render('reset-password',{errorMessage:'Password update failed'});
   }
 
-  res.render('Password reset successful');
+  res.send('Password reset successful');
 } catch (err) {
   console.error(err);
   res.status(400).render('reset-password',{errorMessage:'Password reset failed'});
