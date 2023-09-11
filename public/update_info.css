@@ -60,3 +60,34 @@ body {
     font-size: 20px; /* Adjust the font size to your desired value */
   }
   
+
+  /* Mobile devices (portrait) */
+@media only screen and (max-width: 767px) {
+  /* Your mobile-specific CSS here */
+}
+
+/* Tablet landscape and larger devices */
+@media only screen and (min-width: 768px) {
+  /* Your tablet landscape and larger specific CSS here */
+}
+
+/* Tablet portrait and larger devices */
+@media only screen and (min-width: 768px) and (max-width: 1023px) {
+  /* Your tablet portrait and larger specific CSS here */
+}
+
+/* Desktop devices */
+@media only screen and (min-width: 1024px) {
+  /* Your desktop-specific CSS here */
+}
+
+/* High-resolution (Retina) displays */
+@media only screen and (-webkit-min-device-pixel-ratio: 2),
+       only screen and (min-resolution: 192dpi) {
+  /* Your high-resolution display specific CSS here */
+}
+
+/* Custom media query for screens between 600px and 900px wide */
+@media only screen and (min-width: 600px) and (max-width: 900px) {
+  /* Your custom CSS here */
+}

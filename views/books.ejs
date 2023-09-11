@@ -7,6 +7,24 @@
     <link rel="stylesheet" href="books.css">
 </head>
 <body>
+    <nav class="top-nav" >
+        <div class="logo">SnuggleReads</div>
+        <ul class="navStuff">
+            <li>
+                <link><a href="./" class="navList">Home</a></link>
+            </li>
+            <li>
+                <link><a href="./books" class="navList">Book Catalog</a></link>
+            </li>
+            <li>
+                <link><a href="./registration" class="navList">Register</a></link>
+            </li>
+            <li>
+                <link><a href="./login" class="navList">Login</a></link>
+            </li>
+        </ul>
+    </nav>
+</div>
     <div id="flip-card-container">
         <% allBooks.forEach(book => { %>
             <div class="flip-card">
@@ -31,7 +49,7 @@
     <script>
         function funcname() {
             // Add your logic here
-            alert('Button clicked!');
+            alert('Book Added to Account!');
         }
     </script>
 </body>

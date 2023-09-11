@@ -169,45 +169,92 @@
 }
 
 
-.navbar1{
-display: flex;
-justify-content: center;
-background-color: cornflowerblue;
-font-size: larger;
-font-family: 'Courier New', Courier, monospace;
-
-
-
- }
-
- .navbar2{
-  display: flex;
-  background-color: white;
-  font-family: 'Courier New', Courier, monospace;
-  font-size: 50px;
-  
-  
- }
-
- #snuggle-reads{
-  text-decoration: none;
-  color: black;
-  font-weight: bolder;
- }
-
- .navlinks{
-  margin: .7%;
-  font-size: medium;
-  font-weight: 550;
-  position: relative;
-  left: 120px;
-  top: 10px;
-  text-decoration: none;
-  font-family: 'Courier New', Courier, monospace;
-  color: black;
+nav{
+  background-color: #E2C799;
+  position: fixed;
+  top:0px;
+  left: 0px;
+  width: 100%;
+  height: auto;
+  z-index: 2;
+}
+  .logo{
+      padding: 22px 20;
+      height: 80px;
+      float: left;
+      font-size: 50px;
+      color: black;
+      font: bold;
+      font-family: 'Courier New', Courier, monospace;
+      
+  }
+   
  
- }
+  
 
+  nav ul{
+      
+      list-style: none;
+      float: right;
+      margin: 0px;
+      margin-right: 10%;
+      padding: 0px;
+     display: flex;
+  }
+
+   .navList{
+      
+      line-height: 80px;
+      color: black;
+      padding: 12px 30px;
+      text-decoration: none;
+      font-size: 20px;
+      font-weight: bold;
+      text-transform: uppercase;
+      font-family: 'Courier New', Courier, monospace;
+  }
+
+
+  
+  .top-nav ul li:hover::after{
+width: 100%;
+background: #ffffff;
+  }
+
+  .navList:hover{
+      color: white
+  }
  .welcome{
   font-family: 'Courier New', Courier, monospace;
  }
+
+ /* Mobile devices (portrait) */
+@media only screen and (max-width: 767px) {
+  /* Your mobile-specific CSS here */
+}
+
+/* Tablet landscape and larger devices */
+@media only screen and (min-width: 768px) {
+  /* Your tablet landscape and larger specific CSS here */
+}
+
+/* Tablet portrait and larger devices */
+@media only screen and (min-width: 768px) and (max-width: 1023px) {
+  /* Your tablet portrait and larger specific CSS here */
+}
+
+/* Desktop devices */
+@media only screen and (min-width: 1024px) {
+  /* Your desktop-specific CSS here */
+}
+
+/* High-resolution (Retina) displays */
+@media only screen and (-webkit-min-device-pixel-ratio: 2),
+       only screen and (min-resolution: 192dpi) {
+  /* Your high-resolution display specific CSS here */
+}
+
+/* Custom media query for screens between 600px and 900px wide */
+@media only screen and (min-width: 600px) and (max-width: 900px) {
+  /* Your custom CSS here */
+}
