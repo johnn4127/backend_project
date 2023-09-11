@@ -404,9 +404,9 @@ app.post('/reset-password/:id/:token',async(req,res,next)=>{
     return res.status(400).render('reset-password',{errorMessage:'Passwords do not match'});
     
   }
-  if (urlRegex.test(password,repassword)) {
-    return res.status(400).render('reset-password',{errorMessage:'Password should not contain a URL'})
-  };
+  // if (urlRegex.test(password,repassword)) {
+  //   return res.status(400).render('reset-password',{errorMessage:'Password should not contain a URL'})
+  // };
   
   const saltRounds = 10;
   const hashedNewPassword = await bcrypt.hash(password, saltRounds);
