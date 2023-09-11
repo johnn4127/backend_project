@@ -6322,3 +6322,13 @@
 =======
 
 >>>>>>> main
+{"body":{},"level":"info","method":"GET","params":{"0":"/"},"service":"user-service","timestamp":"9/11/2023, 2:26:12 PM","url":"/"}
+{"body":{},"level":"info","method":"GET","params":{"0":"/carousel.css"},"service":"user-service","timestamp":"9/11/2023, 2:26:12 PM","url":"/carousel.css"}
+{"body":{},"level":"info","method":"GET","params":{"0":"/books"},"service":"user-service","timestamp":"9/11/2023, 2:26:14 PM","url":"/books"}
+{"body":{},"level":"info","method":"GET","params":{"0":"/registration"},"service":"user-service","timestamp":"9/11/2023, 2:26:17 PM","url":"/registration"}
+{"body":{},"level":"info","method":"GET","params":{"0":"/login"},"service":"user-service","timestamp":"9/11/2023, 2:26:20 PM","url":"/login"}
+{"body":{},"level":"info","method":"GET","params":{"0":"/forgot_password"},"service":"user-service","timestamp":"9/11/2023, 2:26:22 PM","url":"/forgot_password"}
+{"body":{},"level":"info","method":"GET","params":{"0":"/forgot_password"},"service":"user-service","timestamp":"9/11/2023, 2:27:50 PM","url":"/forgot_password"}
+{"body":{},"level":"info","method":"GET","params":{"0":"/forgot_password"},"service":"user-service","timestamp":"9/11/2023, 2:27:51 PM","url":"/forgot_password"}
+{"body":{},"level":"info","method":"GET","params":{"0":"/forgot_password"},"service":"user-service","timestamp":"9/11/2023, 2:27:57 PM","url":"/forgot_password"}
+{"body":{},"level":"info","method":"GET","params":{"0":"/forgot_password"},"service":"user-service","timestamp":"9/11/2023, 2:29:28 PM","url":"/forgot_password"}
