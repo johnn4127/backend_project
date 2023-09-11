@@ -49,7 +49,14 @@ const logger = winston.createLogger({
     }));
   }
   
-  
+  app.use(session({
+    secret: '12345', // Change this to a strong secret key
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      maxAge: 3600000, // Session will expire after 1 hour (adjust as needed)
+    },
+  }));
   
 app.all('*', (req, res, next) => {
       logger.log({

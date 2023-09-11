@@ -5,7 +5,6 @@
     background-color: transparent;
     width: 20%;
     height: 200px;
-    border: 1px solid #f1f1f1;
     perspective: 1000px; /* Remove this if you don't want the 3D effect */
   }
 
@@ -22,7 +21,29 @@
     width: 100%;
   }
   #add-to-account-btn{
-    padding-top: 8%;
+    padding-top: 4%;
+  }
+  #add-to-account-btn{
+    display: inline-block;
+    padding: 15px 25px;
+    font-size: 24px;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    outline: none;
+    color: #fff;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 9px #999;
+  }
+  
+  #add-to-account-btn:hover {background-color: #3e8e41}
+  
+  #add-to-account-btn:active {
+    background-color: #3e8e41;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
   }
   /* This container is needed to position the front and back side */
   .flip-card-inner {

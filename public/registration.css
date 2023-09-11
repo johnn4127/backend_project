@@ -43,8 +43,9 @@ body {
     max-width: 50%;
     margin-left: auto;
     position: absolute; /* Position the image absolutely */
-    top: 0; /* Position it at the top of the .content-container */
+
     right: 0; /* Position it at the right of the .content-container */
+    
   }
   
   .bookshelf {
