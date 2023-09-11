@@ -10,7 +10,7 @@ const {Accounts,Books,Histories, AccountBooks} = require('./models')
 const jwt=require('jsonwebtoken')
 const sgMail=require('@sendgrid/mail')
 const {user}=require('./models')
-const API_KEY= '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'                                   //'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'
+const API_KEY= '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'
 sgMail.setApiKey(API_KEY)
 app.use(express.json())
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -522,7 +522,7 @@ app.post('/reset-password/:id/:token',async(req,res,next)=>{
     return res.status(400).render('reset-password',{errorMessage:'Password update failed'});
   }
 
-  res.render('login');
+  res.send('Password Reset Successful');
 } catch (err) {
   console.error(err);
   res.status(400).render('reset-password',{errorMessage:'Password reset failed'});
