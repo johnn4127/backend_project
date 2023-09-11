@@ -9,7 +9,8 @@ const bcrypt = require('bcrypt')
 const {Accounts,Books,Histories, AccountBooks} = require('./models')
 const jwt=require('jsonwebtoken')
 const sgMail=require('@sendgrid/mail')
-const API_KEY='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'
+const {user}=require('./models')
+const API_KEY= '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'
 sgMail.setApiKey(API_KEY)
 app.use(express.json())
 const swaggerJSDoc = require('swagger-jsdoc');
@@ -20,10 +21,11 @@ app.use('/bookhistory', bookHistoryRouter);
 app.use(express.static(__dirname + '/public'));
 const path = require('path');
 const db = "postgres://oniifgkp:VEr8-v22_Ty-JC7eNMdfoTFRPD8YcjLc@berry.db.elephantsql.com/oniifgkp";
-const { Sequelize, DataTypes } = require('sequelize');
-const sequelize = new Sequelize(db)
+const { Sequelize, DataTypes } = require("sequelize");
+const sequelize = new Sequelize(db) //is this the same thing as line 164
 app.set('view engine', 'ejs');
 app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json());
 
 const logger = winston.createLogger({
     level: 'info',
@@ -69,6 +71,14 @@ app.all('*', (req, res, next) => {
       });
       next();
   })
+  app.use(session({
+    secret: '12345', // Change this to a strong secret key
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      maxAge: 3600000, // Session will expire after 1 hour (adjust as needed)
+    },
+  }));
 
 
 
@@ -128,6 +138,8 @@ const Account = require('./models/accounts'); // Import your model
 
 
 app.get('/accountinfo', async (req, res) => {
+
+  
   try {
     const accounts = await Accounts.findAll();
 
@@ -339,15 +351,11 @@ app.post('/login', async (req, res) => {
   });
   
       
-  let user={
-    id: "2",
-    email: "theman@gmail.com" ,
-    password: "lilbro"
-  }
+
   app.post('/delete_account', async (req, res) => {
       const { email } = req.body;
   
-  
+  })
      
   
   
@@ -355,6 +363,10 @@ app.post('/login', async (req, res) => {
 
 
 
+
+
+app.post('/delete_account', async (req, res) => {
+    const { email } = req.body;
   
     try {
       
@@ -368,7 +380,7 @@ app.post('/login', async (req, res) => {
       // Delete the user
       await user.destroy();
       // Redirect to a confirmation page
-      return res.redirect('/'); // Redirect to a confirmation page
+      return res.redirect('/home'); // Redirect to a confirmation page
     } catch (error) {
       // Handle any database errors with a more user-friendly message
       console.error('Error deleting user:', error);
@@ -380,79 +392,154 @@ app.post('/login', async (req, res) => {
   
   
 const JWT_SECRET='some super secret...'
-const message={
-  to: 'deronfambro0112@gmail.com',
-  from: 'snugglereads@gmail.com',
-  subject: 'hello from snugglereads',
-  text: 'hello from sendgrid',
-  html: '<h1>Hello from Snugglereads</h1>'
-}
-sgMail.send(message).then(res=>console.log('email sent')).catch(err=>console.log(err.message))
+// const message={
+//   to: 'deronfambro0112@gmail.com',
+//   from: 'snugglereads@gmail.com',
+//   subject: 'hello from snugglereads',
+//   text: 'hello from sendgrid',
+//   html: '<h1>Hello from Snugglereads</h1>'
+// }
+// sgMail.send(message).then(res=>console.log('email sent')).catch(err=>console.log(err.message))
 
 
-app.get('/forgot_password',(req,res,next) =>{
-  res.render("forgot_password")
-})
+// app.get('/forgot_password',(req,res,next) =>{
+//   res.render("forgot_password",{errorMessage:'Error loading page'})
+  
+// })
 
-app.post('/forgot_password',(req,res,next)=>{
+app.get('/forgot_password', (req, res) => {
+  const errorMessage = 'Email already registered'; // Define the errorMessage if needed
+
+  if (typeof errorMessage === 'undefined') {
+    res.render('forgot_password');
+  } else {
+    res.status(500).render('forgot_password', { errorMessage });
+  }
+});
+
+
+
+
+app.post('/forgot_password',async(req,res,next)=>{
   const {email}=req.body;
 //makes sure user exist in database
-if(email !== user.email){
-  res.send('User not found')
-  return;
-}
-//creates a one time link for the user
-const secret=JWT_SECRET + user.password 
-//stored in the jwt token
-const payload={
-  email: user.email,
-  id: user.id
-}
-//creating the token and making it expire in 15 min
-const token=jwt.sign(payload,secret,{expiresIn: '15m'})
+try{
+  const user = await Accounts.findOne({ where: { email } });
+
+    if (!user) {
+      return res.status(400).render('forgot_password',{errorMessage:'Email already registered'});      //.json('User not found');
+    }
+
+    //creates a one time link for the user
+    const secret=JWT_SECRET + user.password 
+    //stored in the jwt token
+    const payload={
+      email: user.email,
+      id: user.id
+    }
+    
+    
+//creating the token and making it expire in 1 day
+const token=jwt.sign(payload,secret,{expiresIn: '1d'})
 const link=`http://localhost:3000/reset-password/${user.id}/${token}` //where the user goes when they click the link
 console.log(link) //send emails here
-res.send(`password reset link has been sent to your email`)
-})
+const message = {
+  to: user.email,
+  from: 'snugglereads@gmail.com',
+  subject: 'Password Reset',
+  text: 'Click the link to reset your password: ' + link,
+  html: `<p>Click the link to reset your password:</p><a href="${link}">${link}</a>`,
+};
+
+await sgMail.send(message).then(() => {
+  console.log('Email Sent')
+  res.send(`password reset link has been sent to your email`)
+}).catch((err) => {
+  console.error(err);
+  return res.status(400).render('forgot_password',{errorMessage:'Error sending link'});
+});
+} catch (err) {
+console.error(err.message);
+res.status(400).render('forgot_password',{errorMessage:'Error sending link'});
+}
+});
+
+
+
 
 //this is the rounte the link above takes the user to
-app.get('/reset-password/:id/:token',(req,res,next)=>{
-const {id,token}=req.params
-
-//this checks if the id is in the database
-if(id !== user.id){
-  res.send(`invalid id`)
+app.get('/reset-password/:id/:token', async(req,res,next)=>{
+  console.log('/forgot_password')
+const {id,token,email}=req.params
+try{
+  const user=await Accounts.findOne({ where: { id } })
+  //this checks if the id is in the database
+if(!user){
+  res.status(400).render('reset-password',{errorMessage:'Invalid ID'});
   return
 }
 const secret=JWT_SECRET + user.password
-try{
-  const payload=jwt.verify(token, secret)
-  res.render('reset-password',{email: user.email})
+console.log('token:',token)
+console.log('secret:',secret)
+payload=jwt.verify(token, secret)
+console.log('payload',payload)
+console.log('error occured')
+res.render('reset-password',{email: user.email})
+console.log('error occured')
+
 }catch(err){
-  console.log(err.message)
-  res.send(err.message)
+  console.log('error occured')
+  res.status(400).render('reset-password',{errorMessage:'An error occured during password reset'});
 }
 })
 
-app.post('/reset-password/:id/:token',(req,res,next)=>{
+app.post('/reset-password/:id/:token',async(req,res,next)=>{
   const {id,token}=req.params
-  const {password,password2}=req.body
-  res.send(user)
-  if(id !== user.id){
-    res.send(`invalid id`)
-    return
+  const {password,repassword}=req.body
+  
+  try {
+    const userId = parseInt(id, 10);
+    
+    if (isNaN(userId)) {
+      return res.status(400).render('reset-password',{errorMessage:'Invalid user ID'});
+    
+    }
+    const user = await Accounts.findOne({ where: { id: userId } });  //remove iser id if err
+    
+    if(!user){
+      return res.status(400).render('reset-password',{errorMessage:'Invalid user'});
+    }
+    
+    const secret=JWT_SECRET + user.password
+    payload = jwt.verify(token, secret);
+
+  if (password.trim() !== repassword.trim()) {
+    console.log('Passwords do not match');
+    return res.status(400).render('reset-password',{errorMessage:'Passwords do not match'});
+    
   }
-  const secret=JWT_SECRET + user.password
-  //validate password and passwoed2 should match
-  try{
-    const payload=jwt.verify(token, secret)
-    user.password=password
-    res.send(user)
-  }catch(err){
-    console.log(err.message)
-    res.send(err.message)
+  // if (urlRegex.test(password,repassword)) {
+  //   return res.status(400).render('reset-password',{errorMessage:'Password should not contain a URL'})
+  // };
+  
+  const saltRounds = 10;
+  const hashedNewPassword = await bcrypt.hash(password, saltRounds);
+  // Update the user's password in the database
+  user.password = hashedNewPassword;
+  await user.save();
+  
+  const updatedUser = await Accounts.findOne({ where: { id: userId } });
+  if (updatedUser && updatedUser.password !== hashedNewPassword) {
+    console.log('Password update failed in the database');
+    return res.status(400).render('reset-password',{errorMessage:'Password update failed'});
   }
-})
+
+  res.send('Password Reset Successful');
+} catch (err) {
+  console.error(err);
+  res.status(400).render('reset-password',{errorMessage:'Password reset failed'});
+}
+});
 
 
 
@@ -468,4 +555,3 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
-
