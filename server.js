@@ -20,15 +20,7 @@ const db = "postgres://oniifgkp:VEr8-v22_Ty-JC7eNMdfoTFRPD8YcjLc@berry.db.elepha
 const { Sequelize, DataTypes } = require('sequelize');
 const sequelize = new Sequelize(db)
 app.set('view engine', 'ejs');
-
-app.use(session({
-    secret: '12345', // Change this to a strong secret key
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      maxAge: 3600000, // Session will expire after 1 hour (adjust as needed)
-    },
-  })); 
+app.use(bodyParser.urlencoded({ extended: false }))
 
 const logger = winston.createLogger({
     level: 'info',

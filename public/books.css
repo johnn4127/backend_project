@@ -5,6 +5,7 @@
     background-color: transparent;
     width: 20%;
     height: 200px;
+    color: white;
     border: 1px solid #f1f1f1;
     perspective: 1000px; /* Remove this if you don't want the 3D effect */
   }
@@ -17,7 +18,9 @@
   #flip-card-container{
     display: flex;
     flex-wrap: wrap;
- 
+    justify-content: center;
+    background-image: url('https://tinyurl.com/32b7ktua');
+    background-size: 100%;
   }
   /* This container is needed to position the front and back side */
   .flip-card-inner {
@@ -52,7 +55,7 @@
   
   /* Style the back side */
   .flip-card-back {
-    background-color: dodgerblue;
+    background-color: black;
     color: white;
     transform: rotateY(180deg);
   }

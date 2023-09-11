@@ -11,11 +11,13 @@ body {
   #header2 {
     font-family: 'Courier New', Courier, monospace;
     font-size: 40px;
+    display: flex;
+    justify-content: center;
   }
   
   .content-container {
     display: flex;
-    justify-content: flex-start; /* Place the content-container at the left edge of the page */
+    justify-content: center; /* Place the content-container at the left edge of the page */
     align-items: flex-start; /* Align items at the top of the page */
     background-color:#F2ECBE;
     padding: 20px;
