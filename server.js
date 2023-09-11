@@ -1,10 +1,12 @@
 const express = require('express');
 const session = require('express-session');
 const bodyParser = require('body-parser');
+const { setCookie, getCookie, deleteCookie } = require('./public/serverCookie');
+
 const app = express();
 const winston = require("winston");
 const bcrypt = require('bcrypt')
-const {Accounts,Books,Histories} = require('./models')
+const {Accounts,Books,Histories, AccountBooks} = require('./models')
 const jwt=require('jsonwebtoken')
 const sgMail=require('@sendgrid/mail')
 const {user}=require('./models')
@@ -12,6 +14,8 @@ const API_KEY= 'SG.uXfkFh4DQDCn2cUV79xWmQ.Q_jmmiCU_5z1HaAkb8NJpMYJcHpOCJF53KR-vt
 sgMail.setApiKey(API_KEY)
 app.use(express.json())
 app.use(bodyParser.urlencoded({ extended: false }))
+const bookHistoryRouter = require('./bookhistory');
+app.use('/bookhistory', bookHistoryRouter);
 
 app.use(express.static(__dirname + '/public'));
 const path = require('path');
@@ -68,20 +72,22 @@ app.all('*', (req, res, next) => {
 
   app.get('/userhome', async (req, res) => {
     if (req.session.user) {
+      // Retrieve user data from cookies
+      const userFirstName = getCookie(req, 'userFirstName');
+  
       // User is authenticated, you can access user data like req.session.user
       const user = req.session.user;
-      res.render('userhome', { user });
+      
+      // Now you have the user's first name from the cookie
+      console.log('User First Name from Cookie:', userFirstName);
+  
+      res.render('userhome', { user, userFirstName });
     } else {
       // User is not authenticated, handle it accordingly (e.g., redirect to login)
       res.redirect('/login');
     }
   });
   
-
-
-  
-  
-
 app.get('/registration',(req,res) => {
     res.render("registration")
 })
@@ -90,41 +96,65 @@ app.get('/account',(req,res) => {
     res.render('myAccount')
 })
 
+app.get('/bookhistory', async (req, res) => {
+  try {
+    const userBooks = await AccountBooks.findAll({
+      include: {
+        model: Books, // Include the associated Book model
+        attributes: ['book_name'], // Only retrieve the book name
+      },
+    });
+    console.log('User Books:', userBooks);
+
+
+    res.render('book_history', { userBooks });
+  } catch (error) {
+    console.error('Error fetching book history:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+
 
 const Account = require('./models/accounts'); // Import your model
 
 
 app.get('/accountinfo', async (req, res) => {
 
-    const accounts = await Accounts.findAll();    
-})
-
-
-
-
-
-
   
+  try {
+    const accounts = await Accounts.findAll();
+
+    
+    res.render('account_info', { accounts });
+  } catch (error) {
+    console.error('Error fetching account info:', error);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
+
+app.get('/update', async (req, res) => {
+  try {
+      
+      const user = req.session.user;
+
+      // Render the EJS template with the user data
+      res.render('update_info', { user });
+  } catch (error) {
+      console.error('Error fetching user info:', error);
+      res.status(500).send('Internal Server Error');
+  }
+});
+
 app.get('/account',(req,res) => {
     res.render('myAccount')
 })
-
-app.get('/update',(req,res) => {
-    
-    res.render('update_info')
-    
-})
-
 
 app.get('/delete', (req, res) => {
     res.render('delete_info'); // Render the delete_account.ejs template
   });
   
-
-
-
-
-
 app.get('/test', async(req,res) => {
     let bookdata = await Books.findAll()
     console.log(bookdata)
@@ -189,10 +219,10 @@ app.post('/registration', async(req,res) => {
 
 app.get('/update_info', async (req, res) => {
     if (req.session.user) {
-      const user = req.session.user; // Retrieve user data from the session
+      const user = req.session.user; 
       res.render('update_info', { user });
     } else {
-      res.redirect('/login'); // Redirect to the login page if not authenticated
+      res.redirect('/login'); 
     }
 });
 
@@ -211,29 +241,31 @@ app.get('/login',(req,res) =>{
     res.render("login")
 })
 
+
 app.post('/login', async (req, res) => {
     const { email, password } = req.body;
   
     try {
-      // Assuming you have a Sequelize model named Accounts
       const user = await Accounts.findOne({ where: { email } });
   
       if (!user) {
-        // Handle the case where the user doesn't exist
         return res.render('login_fail', { error: 'Account not found' });
       }
-  
-      // Check if the provided password matches the user's password
       const passwordMatch = await bcrypt.compare(password, user.password);
   
       if (!passwordMatch) {
-        // Handle incorrect password
         return res.render('login_fail', { error: 'Incorrect password' });
       }
   
-      // Store user data in the session upon successful login
-      req.session.user = user;
+      // Assuming you have retrieved the user's first name
+      const userFirstName = user.firstName; // Replace with the actual user's first name
   
+      // Set a cookie with the user's first name (example: cookie expires in 7 days)
+      const expirationTimeInDays = 7;
+      const expirationMilliseconds = expirationTimeInDays * 24 * 60 * 60 * 1000; // Convert days to milliseconds
+      setCookie(res, 'userFirstName', userFirstName, expirationMilliseconds);
+  
+      req.session.user = user;
       // Redirect to userhome with the email as a query parameter
       return res.redirect('/userhome');
     } catch (error) {
@@ -242,12 +274,42 @@ app.post('/login', async (req, res) => {
     }
   });
   
-  app.post("/update", async (req, res) => {
+  
+  // app.post('/update', async (req, res) => {
+  //   const { newFirstName, newLastName, newEmail } = req.body;
+  //   const userId = req.session.user.id; 
+  
+  //   try {
+      
+  //     const user = await Accounts.findByPk(userId);
+  
+  //     if (!user) {
+  //       return res.status(404).json({ error: "User not found" });
+  //     }
+  
+  //     // Update user information in the database
+  //     user.firstName = newFirstName;
+  //     user.lastName = newLastName;
+  //     user.email = newEmail;
+  //     await user.save();
+
+  //     // Set cookies to persist the updated user data
+  //   setCookie("userFirstName", newFirstName, 7, res); // Expires in 7 days
+  //   setCookie("userLastName", newLastName, 7, res); // Expires in 7 days
+  //   setCookie("userEmail", newEmail, 7, res); // Expires in 7 days
+  
+  //     return res.json({ success: true });
+  //   } catch (error) {
+  //     console.error("Error updating user information:", error);
+  //     return res.status(500).json({ error: "Internal Server Error" });
+  //   }
+  // });
+
+  app.post('/update', async (req, res) => {
     const { newFirstName, newLastName, newEmail } = req.body;
-    const userId = req.session.user.id; 
+    const userId = req.session.user.id;
   
     try {
-      
       const user = await Accounts.findByPk(userId);
   
       if (!user) {
@@ -260,12 +322,29 @@ app.post('/login', async (req, res) => {
       user.email = newEmail;
       await user.save();
   
+      // Set a cookie with the updated user data
+      setCookie(res, 'userFirstName', newFirstName, 1000);
+  
       return res.json({ success: true });
     } catch (error) {
       console.error("Error updating user information:", error);
       return res.status(500).json({ error: "Internal Server Error" });
     }
   });
+  
+      
+  let user={
+    id: "2",
+    email: "theman@gmail.com" ,
+    password: "lilbro"
+  }
+  app.post('/delete_account', async (req, res) => {
+      const { email } = req.body;
+  
+  
+     
+  
+  
   
 
 
@@ -276,17 +355,14 @@ app.post('/delete_account', async (req, res) => {
     const { email } = req.body;
   
     try {
-      // Assuming you have a Sequelize model named User
+      
       const user = await Accounts.findOne({ where: { email } });
   
       if (!user) {
-        // Handle the case where the user doesn't exist
+        
         return res.status(404).send('User not found');
       }
-  
-      // Delete the user
       await user.destroy();
-  
       // Redirect to a confirmation page
       return res.redirect('/home'); // Redirect to a confirmation page
     } catch (error) {
@@ -295,6 +371,8 @@ app.post('/delete_account', async (req, res) => {
       return res.status(500).send('An error occurred while deleting the account. Please try again later.');
     }
   });
+  
+      
   
   
 const JWT_SECRET='some super secret...'
@@ -427,13 +505,14 @@ app.post('/reset-password/:id/:token',async(req,res,next)=>{
 }
 });
 
-
 app.get('/books', async(req,res) => {
   const allBooks = await Books.findAll()
   
   res.render("books", {allBooks:allBooks})
 })
 
-app.listen(3000, () =>{
-    console.log(`Server is running on port 3000`)
-})
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
+});
