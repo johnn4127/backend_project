@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book History</title>
+</head>
+<body>
+    <h1>Your Book History</h1>
+    <ul>
+        <% userBooks.forEach((userBook) => { %>
+            <li>
+                <strong>ID:</strong> <%= userBook.id %><br>
+                <strong>Account ID:</strong> <%= userBook.accountId %><br>
+                <strong>Book ID:</strong> <%= userBook.bookId %><br>
+                <strong>Book Name:</strong> <%= userBook.Book.book_name %><br> <!-- Add this line to display the book name -->
+                <strong>Created At:</strong> <%= userBook.createdAt %><br>
+                <strong>Updated At:</strong> <%= userBook.updatedAt %><br>
+            </li>
+        <% }); %>
+    </ul>
+</body>
+</html>
+
+
