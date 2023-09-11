@@ -5,7 +5,6 @@
     background-color: transparent;
     width: 20%;
     height: 200px;
-    color: white;
     border: 1px solid #f1f1f1;
     perspective: 1000px; /* Remove this if you don't want the 3D effect */
   }
@@ -19,8 +18,11 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    background-image: url('https://tinyurl.com/32b7ktua');
-    background-size: 100%;
+    background-color: #F2ECBE;
+    width: 100%;
+  }
+  #add-to-account-btn{
+    padding-top: 8%;
   }
   /* This container is needed to position the front and back side */
   .flip-card-inner {
