@@ -13,6 +13,7 @@ const {user}=require('./models')
 const API_KEY= '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'
 sgMail.setApiKey(API_KEY)
 app.use(express.json())
+const swaggerJSDoc = require('swagger-jsdoc');
 app.use(bodyParser.urlencoded({ extended: false }))
 const bookHistoryRouter = require('./bookhistory');
 app.use('/bookhistory', bookHistoryRouter);
@@ -50,7 +51,14 @@ const logger = winston.createLogger({
     }));
   }
   
-  
+  app.use(session({
+    secret: '12345', // Change this to a strong secret key
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
+      maxAge: 3600000, // Session will expire after 1 hour (adjust as needed)
+    },
+  }));
   
 app.all('*', (req, res, next) => {
       logger.log({
@@ -72,10 +80,12 @@ app.all('*', (req, res, next) => {
     },
   }));
 
+
+
   app.get('/', (req, res) => {
     const userName = req.query.name; 
     res.render('home', { userName });
-    
+
   });
 
   app.get('/userhome', async (req, res) => {
@@ -366,6 +376,8 @@ app.post('/delete_account', async (req, res) => {
         
         return res.status(404).send('User not found');
       }
+      
+      // Delete the user
       await user.destroy();
       // Redirect to a confirmation page
       return res.redirect('/home'); // Redirect to a confirmation page
@@ -529,7 +541,10 @@ app.post('/reset-password/:id/:token',async(req,res,next)=>{
 }
 });
 
+
+
 app.get('/books', async(req,res) => {
+  
   const allBooks = await Books.findAll()
   
   res.render("books", {allBooks:allBooks})

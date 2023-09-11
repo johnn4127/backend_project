@@ -13,37 +13,27 @@
  <div class="navbar1">
     <p><a href="default.asp">Get your first book with code SNUGGLEBUDS at checkout.  Join today.</a></p>
   </div>
-  <div class="navbar2">
-    <a id="snuggle-reads" href="default.asp">SnuggleReads</a>
-    
-
-      <a class="navlinks" href="/books">Explore</a>
-    
-      <a class="navlinks" href="/account">My Account</a>
-    
-
-        
-
-
-    
-    
-
-    
-
-      
-      
-      
-      
-      <a class="navlinks" href="/">Sign-Out</a>
-      
-      
-      
-      
-      
-    
-      
-    </div>
-    <p class="welcome" style="font-size: 20px;">Welcome back <%= user.firstName %></p>
+  <nav class="top-nav" >
+    <div class="logo">SnuggleReads</div>
+    <ul class="navStuff">
+        <li>
+            <link><a href="/account" class="navList">My Account</a><link>
+        </li>
+        <li>
+            <link><a href="./" class="navList">Home</a></link>
+        </li>
+        <li>
+            <link><a href="./books" class="navList">Book Catalog</a></link>
+        </li>
+        <li>
+            <link><a href="./registration" class="navList">Register</a></link>
+        </li>
+        <li>
+            <link><a href="./login" class="navList">Login</a></link>
+        </li>
+    </ul>
+</nav>
+    <p class="welcome" style="font-size: 20px; padding-top: 30px;">Welcome back <%= user.firstName %></p>
 
   <div class="everything-container">
 
@@ -65,9 +55,6 @@
       <div class="largeimagecontainerwhite">
         <img src="/assets/photo2.jpg" alt="" class="homelargeimageportrait">
       </div>
-    </div>
-    <div id="footer">
-      <footer>This is footer</footer>
     </div>
   </div>
 </body>

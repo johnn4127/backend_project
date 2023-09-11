@@ -43,8 +43,9 @@ body {
     max-width: 50%;
     margin-left: auto;
     position: absolute; /* Position the image absolutely */
-    top: 0; /* Position it at the top of the .content-container */
+
     right: 0; /* Position it at the right of the .content-container */
+    
   }
   
   .bookshelf {
@@ -59,3 +60,88 @@ body {
     margin-bottom: 20px;
     font-size: 20px; /* Adjust the font size to your desired value */
   }
+  nav{
+    background-color: #E2C799;
+    position: fixed;
+    top:0px;
+    left: 0px;
+    width: 100%;
+    height: auto;
+    z-index: 2;
+}
+    .logo{
+        padding: 22px 20;
+        height: 80px;
+        float: left;
+        font-size: 50px;
+        color: black;
+        font: bold;
+        font-family: 'Courier New', Courier, monospace;
+        
+    }
+     
+   
+    
+
+    nav ul{
+        
+        list-style: none;
+        float: right;
+        margin: 0px;
+        margin-right: 10%;
+        padding: 0px;
+       display: flex;
+    }
+
+     .navList{
+        
+        color: black;
+        padding: 12px 30px;
+        text-decoration: none;
+        font-size: 20px;
+        font-weight: bold;
+        text-transform: uppercase;
+        font-family: 'Courier New', Courier, monospace;
+    }
+
+  
+    
+    .top-nav ul li:hover::after{
+width: 100%;
+background: #ffffff;
+    }
+
+    .navList:hover{
+        color: white
+    }
+
+  /* Mobile devices (portrait) */
+@media only screen and (max-width: 767px) {
+  /* Your mobile-specific CSS here */
+}
+
+/* Tablet landscape and larger devices */
+@media only screen and (min-width: 768px) {
+  /* Your tablet landscape and larger specific CSS here */
+}
+
+/* Tablet portrait and larger devices */
+@media only screen and (min-width: 768px) and (max-width: 1023px) {
+  /* Your tablet portrait and larger specific CSS here */
+}
+
+/* Desktop devices */
+@media only screen and (min-width: 1024px) {
+  /* Your desktop-specific CSS here */
+}
+
+/* High-resolution (Retina) displays */
+@media only screen and (-webkit-min-device-pixel-ratio: 2),
+       only screen and (min-resolution: 192dpi) {
+  /* Your high-resolution display specific CSS here */
+}
+
+/* Custom media query for screens between 600px and 900px wide */
+@media only screen and (min-width: 600px) and (max-width: 900px) {
+  /* Your custom CSS here */
+}

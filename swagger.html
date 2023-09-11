@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Swagger API Documentation</title>
+  <link rel="stylesheet" type="text/css" href="./node_modules/swagger-ui-dist/swagger-ui.css">
+</head>
+<body>
+  <div id="swagger-ui"></div>
+
+  <script src="./node_modules/swagger-ui-dist/swagger-ui-bundle.js"></script>
+  <script>
+    window.onload = function () {
+      const ui = SwaggerUIBundle({
+        url: "/api-docs", // Update with the path to your Swagger JSON file
+        dom_id: "#swagger-ui",
+      });
+    };
+  </script>
+</body>
+</html>
