@@ -390,9 +390,23 @@ const JWT_SECRET='some super secret...'
 // sgMail.send(message).then(res=>console.log('email sent')).catch(err=>console.log(err.message))
 
 
-app.get('/forgot_password',(req,res,next) =>{
-  res.render("forgot_password",{errorMessage:'Error loading page'})
-})
+// app.get('/forgot_password',(req,res,next) =>{
+//   res.render("forgot_password",{errorMessage:'Error loading page'})
+  
+// })
+
+app.get('/forgot_password', (req, res) => {
+  const errorMessage = 'Email already registered'; // Define the errorMessage if needed
+
+  if (typeof errorMessage === 'undefined') {
+    res.render('forgot_password');
+  } else {
+    res.status(500).render('forgot_password', { errorMessage });
+  }
+});
+
+
+
 
 app.post('/forgot_password',async(req,res,next)=>{
   const {email}=req.body;
@@ -411,6 +425,7 @@ try{
       email: user.email,
       id: user.id
     }
+    
     
 //creating the token and making it expire in 1 day
 const token=jwt.sign(payload,secret,{expiresIn: '1d'})
@@ -442,7 +457,8 @@ res.status(400).render('forgot_password',{errorMessage:'Error sending link'});
 
 //this is the rounte the link above takes the user to
 app.get('/reset-password/:id/:token', async(req,res,next)=>{
-const {id,token}=req.params
+  console.log('/forgot_password')
+const {id,token,email}=req.params
 try{
   const user=await Accounts.findOne({ where: { id } })
   //this checks if the id is in the database
@@ -455,8 +471,12 @@ console.log('token:',token)
 console.log('secret:',secret)
 payload=jwt.verify(token, secret)
 console.log('payload',payload)
-res.status(500).render('reset-password',{email: user.email})
+console.log('error occured')
+res.render('reset-password',{email: user.email})
+console.log('error occured')
+
 }catch(err){
+  console.log('error occured')
   res.status(400).render('reset-password',{errorMessage:'An error occured during password reset'});
 }
 })
@@ -502,7 +522,7 @@ app.post('/reset-password/:id/:token',async(req,res,next)=>{
     return res.status(400).render('reset-password',{errorMessage:'Password update failed'});
   }
 
-  res.send('Password reset successful');
+  res.render('login');
 } catch (err) {
   console.error(err);
   res.status(400).render('reset-password',{errorMessage:'Password reset failed'});
